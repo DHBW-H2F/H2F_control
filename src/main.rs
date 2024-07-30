@@ -50,12 +50,55 @@ async fn start_electrolyzer() -> Result<String, Box<dyn std::error::Error>> {
         })),
     }
 }
+async fn stop_electrolyzer() -> Result<String, Box<dyn std::error::Error>> {
+    let mut device = ModbusDeviceAsync::new(
+        TCPContext {
+            addr: "127.0.0.1:4502".parse()?,
+        }
+        .into(),
+        HashMap::new(),
+        get_defs_from_json(File::open("holding_registers.json")?)?,
+    );
+    device.connect().await?;
 
-#[get("/start")]
-async fn start() -> String {
+    let start_register = &device
+        .get_holding_register_by_name("Electrolyze".to_string())
+        .ok_or(RegisterDoesNotExistError::NotFound {
+            reg: "Electrolyze".to_string(),
+        })?
+        .clone();
+
+    let res = device
+        .write_holding_register(
+            start_register.clone(),
+            modbus_device::types::RegisterValue::Boolean(false),
+        )
+        .await;
+
+    match res {
+        Ok(_) => Ok("".to_string()),
+        Err(_) => Err(Box::new(RegisterDoesNotExistError::NotFound {
+            reg: "hjqdsghgs".to_string(),
+        })),
+    }
+}
+
+#[get("/")]
+async fn start() -> Result<Redirect, String> {
     match start_electrolyzer().await {
-        Ok(val) => val,
-        Err(err) => return format!("Could not initiate connexion to the modbus device {err}"),
+        Ok(_val) => Ok(Redirect::to(uri!("/index.html"))),
+        Err(err) => Err(format!(
+            "Could not initiate connexion to the modbus device {err}"
+        )),
+    }
+}
+#[get("/")]
+async fn stop() -> Result<Redirect, String> {
+    match stop_electrolyzer().await {
+        Ok(_val) => Ok(Redirect::to(uri!("/index.html"))),
+        Err(err) => Err(format!(
+            "Could not initiate connexion to the modbus device {err}"
+        )),
     }
 }
 
@@ -70,4 +113,5 @@ fn rocket() -> _ {
         .mount("/", routes![index])
         .mount("/", FileServer::from("./static"))
         .mount("/start", routes![start])
+        .mount("/stop", routes![stop])
 }
