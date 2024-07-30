@@ -21,7 +21,7 @@ custom_error! {RegisterDoesNotExistError
 async fn start_electrolyzer() -> Result<String, Box<dyn std::error::Error>> {
     let mut device = ModbusDeviceAsync::new(
         TCPContext {
-            addr: "127.0.0.1:4502".parse()?,
+            addr: "192.168.1.12:502".parse()?,
         }
         .into(),
         HashMap::new(),
@@ -53,7 +53,7 @@ async fn start_electrolyzer() -> Result<String, Box<dyn std::error::Error>> {
 async fn stop_electrolyzer() -> Result<String, Box<dyn std::error::Error>> {
     let mut device = ModbusDeviceAsync::new(
         TCPContext {
-            addr: "127.0.0.1:4502".parse()?,
+            addr: "192.168.1.12:502".parse()?,
         }
         .into(),
         HashMap::new(),
