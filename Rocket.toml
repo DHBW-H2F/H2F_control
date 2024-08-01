@@ -10,5 +10,5 @@ limits = { json = "10MiB" }
 port = 9001
 
 [release]
-port = 6666
+port = 8000
 ip_header = false
