@@ -2,17 +2,52 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <link rel="icon" href="./favicon.png" />
+        <title>H2 Production Dashboard</title>
+
+        <!---- CSS  ---->
+        <link rel="stylesheet" href = "css/bootstrap.css">
+        <link rel="stylesheet" href = "css/style.css">
+
+        <!------- JS  ---->
+        <script src="js/jquery-3.7.1.min.js"></script>
+        <script src="js/bootstrap.js"></script>
+        <script src="js/script.js"></script>
     </head>
+
     <body>
-        <h1>test</h1>
-        <form action = "/start" method = "GET">
-            <button>Start</button>
-        </form>
-        <form action = "/stop" method = "GET">
-            <button>Stop</button>
-        </form>
-        <br></br>
-        <iframe src="http://localhost:3000/d/webuidashboard/webui?orgId=1&kiosk=1&theme=light" width="900" height="500" frameborder="0"></iframe>
+        <div class="container-fluid blue" id = "header">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Configuration Panel
+              </button>
+              
+              <!-- Modal -->
+              <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="exampleModalLabel">Configuration Panel</h1>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action = "/start" method = "GET">
+                            <button>Start</button>
+                        </form>
+                        <form action = "/stop" method = "GET">
+                            <button>Stop</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <h1 id = title>H2 Production Dashboard</h1>
+
+        </div>
+            
+            <br></br>
+            <iframe src="http://141.72.13.23:3000/d-solo/fdrjcrk05o0zka/production?orgId=1&panelId=5&theme=light" width="450" height="200" frameborder="0" width="450" height="200" frameborder="0"></iframe>
     </body>
 </html>

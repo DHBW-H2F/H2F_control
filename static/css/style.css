@@ -1,0 +1,14 @@
+
+.blue {
+  background-color: #267bfc;
+}
+
+#header {
+  height: 80px;
+}
+
+#title {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+}
