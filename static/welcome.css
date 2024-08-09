@@ -1,0 +1,172 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column; /* Ensure that elements stack vertically */
+    justify-content: flex-start; /* Align items to the top */
+    align-items: center; /* Center content horizontally */
+    height: 100vh;
+    background-color: #d3d3d3; /* Light grey background */
+    padding: 20px; /* Add padding to ensure content isn't flush against the viewport edges */
+}
+
+.card {
+    width: 400px;
+    height: 200px;
+    background: transparent;
+    position: relative;
+    display: grid;
+    place-content: center;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.border {
+    position: absolute;
+    inset: 0;
+    border: 2px solid red;
+    opacity: 0;
+    transform: rotate(10deg);
+    animation: borderAnimation 5s ease-in-out infinite;
+}
+
+.content {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.content .logo {
+    height: 150px; /* Adjusted height */
+    width: 150px;  /* Adjusted width */
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.content .logo .logo1,
+.content .logo .logo2 {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.5s ease-in-out;
+}
+
+/* Ensure .logo2 is larger and starts off-screen */
+.content .logo .logo2 {
+    opacity: 0;
+    transform: scale(1.2) translateX(150%); /* Start larger and off-screen */
+    animation: logo2Animation 5s ease-in-out infinite;
+}
+
+.content .logo .logo1 {
+    animation: logo1Animation 5s ease-in-out infinite;
+}
+
+.content .logo img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Keyframe animations */
+@keyframes logo2Animation {
+    0%, 100% {
+        opacity: 0;
+        transform: scale(1.2) translateX(150%); /* Larger size and off-screen */
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1) translateX(0); /* Full size and centralize */
+    }
+}
+
+@keyframes logo1Animation {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0; /* Fade out at midpoint */
+    }
+}
+
+@keyframes borderAnimation {
+    0%, 100% {
+        inset: 0;
+        opacity: 0;
+        transform: rotate(10deg);
+    }
+    50% {
+        inset: 15px;
+        opacity: 1;
+        transform: rotate(0deg);
+    }
+}
+
+/* New phrase styling */
+.phrase {
+    margin-top: 100px; /* Space between the card and the phrase */
+    font-size: 30px;
+    font-weight: bold; /* Make the text bold for emphasis */
+    color: transparent; /* Make the text color transparent to show the gradient */
+    text-align: center;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Light shadow for subtle contrast */
+    line-height: 1.4; /* Improve readability with line spacing */
+    background: linear-gradient(90deg, #e3001b 40%, #7c8991 60%); /* Red covers 40%, grey covers 60% */
+    -webkit-background-clip: text; /* Clip background to text for WebKit browsers */
+    background-clip: text; /* Clip background to text */
+}
+
+/* Styling for the buttons container */
+.button-container {
+    display: flex;
+    flex-direction: column; /* Stack button rows vertically */
+    align-items: center; /* Center button rows horizontally */
+    margin-top: 50px; /* Space between the phrase and the buttons */
+}
+
+/* Styling for each button row */
+.button-row {
+    display: flex;
+    justify-content: center; /* Center buttons horizontally within the row */
+    width: 100%; /* Full width to ensure alignment */
+    margin-bottom: 20px; /* Space between button rows */
+}
+
+/* Center the buttons in the second row */
+.center-buttons {
+    justify-content: center; /* Center buttons horizontally within the row */
+}
+
+/* Styling for each button */
+button {
+    width: 10em;
+    height: 3.5em;
+    border: 3px ridge #e3001b; /* Red border */
+    outline: none;
+    background-color: transparent;
+    color: rgb(82, 82, 82);
+    transition: 1s;
+    border-radius: 0.3em;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 0 10px; /* Space between buttons in a row */
+    position: relative;
+}
+
+/* Remove background color effects on hover */
+button::after, button::before {
+    content: none; /* Remove the pseudo-elements */
+}
+
+/* Remove shadow and scale effects */
+button:hover {
+    box-shadow: inset 0px 0px 25px #7c8991; /* Grey shadow on hover */
+}
