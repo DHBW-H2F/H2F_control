@@ -51,3 +51,26 @@ document.addEventListener('DOMContentLoaded', function() {
     console.error('No dashboard selected.');
   }
 });
+
+// script.js
+document.addEventListener('DOMContentLoaded', function() {
+  const darkModeSwitch = document.getElementById('darkModeSwitch');
+  
+  // Check local storage for the user's preference
+  if (localStorage.getItem('darkMode') === 'true') {
+    document.body.classList.add('dark-mode');
+    darkModeSwitch.checked = true;
+  }
+
+  // Toggle dark mode on checkbox change
+  darkModeSwitch.addEventListener('change', function() {
+    if (darkModeSwitch.checked) {
+      document.body.classList.add('dark-mode');
+      localStorage.setItem('darkMode', 'true');
+    } else {
+      document.body.classList.remove('dark-mode');
+      localStorage.setItem('darkMode', 'false');
+    }
+  });
+});
+

@@ -122,29 +122,6 @@ input:checked + .slider:before {
   background: var(--switch-color);
 }
 
-.sun, .moon {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 18px;
-  transition: opacity 0.3s;
-}
-
-.sun {
-  left: 10px;
-  color: var(--switch-color);
-  background: url('path/to/sun-icon.png') no-repeat center;
-  background-size: 24px 24px; /* Adjust as needed */
-}
-
-.moon {
-  right: 10px;
-  color: var(--moon-color);
-  background: url('path/to/moon-icon.png') no-repeat center;
-  background-size: 24px 24px; /* Adjust as needed */
-  opacity: 0;
-}
-
 input:checked + .slider .moon {
   opacity: 1;
 }
