@@ -35,8 +35,7 @@
             <span id="rangeValue" class="fw-bold">70%</span>
         </div>
         <div class="flex-grow-1">
-            <iframe src="http://141.72.13.23:3000/d-solo/fdrjcrk05o0zka/production?orgId=1&panelId=5&theme=light"
-                    width="100%" height="400" frameborder="0"></iframe>
+            <iframe src="http://example.com/default-dashboard" width="100%" height="400" frameborder="0"></iframe>
         </div>
     </div>
 
@@ -49,16 +48,10 @@
 
     <!-- Footer Section -->
     <div class="footer-container">
-        <!-- Main Footer Content -->
         <div class="flex justify-between items-center">
-            <!-- "More Information" Button -->
-            <div class="info-button">
-                More Information / Mehr Informationen
-            </div>
+            <div class="info-button">More Information / Mehr Informationen</div>
         </div>
-        <!-- Information Panel -->
         <div class="info-panel">
-            <!-- Left Side Information -->
             <div class="info-left">
                 <h2 class="text-lime-600 font-bold text-xl mb-2">Contact / Kontakt</h2>
                 <div class="info-item">
@@ -70,7 +63,6 @@
                     </p>
                 </div>
             </div>
-            <!-- Right Side Information -->
             <div class="info-right">
                 <div class="info-item">
                     <span role="img" aria-label="Email">📧</span>
@@ -90,37 +82,5 @@
             </div>
         </div>
     </div>
-
-    <script>
-        function updateRangeValue(value) {
-            document.getElementById('rangeValue').innerText = value + '%';
-        }
-
-        const darkModeSwitch = document.getElementById('darkModeSwitch');
-        darkModeSwitch.addEventListener('change', function() {
-            if (this.checked) {
-                document.body.classList.remove('light-mode');
-                document.body.classList.add('dark-mode');
-            } else {
-                document.body.classList.remove('dark-mode');
-                document.body.classList.add('light-mode');
-            }
-        });
-
-        const productionRange = document.getElementById('productionRange');
-        productionRange.addEventListener('input', function() {
-            updateRangeValue(this.value);
-        });
-
-        document.getElementById('startButton').addEventListener('click', function() {
-            // Add your start logic here
-            console.log('Start button clicked');
-        });
-
-        document.getElementById('stopButton').addEventListener('click', function() {
-            // Add your stop logic here
-            console.log('Stop button clicked');
-        });
-    </script>
 </body>
 </html>

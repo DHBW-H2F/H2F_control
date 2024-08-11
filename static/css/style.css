@@ -2,7 +2,7 @@
   --primary-color: #333333; /* Dark color */
   --secondary-color: #ffffff; /* Light color */
   --accent-color: #007bff; /* Blue accent color */
-  --bg-color: #f0f0f0; /* Light grey background */
+  --bg-color: #d3d3d3; /* Light grey background */
   --dark-bg-color: #222222;
   --dark-text-color: #eeeeee;
   --switch-bg: #cccccc; /* Background color of the switch */
@@ -242,7 +242,7 @@ body.dark-mode .modal-content {
 }
 
 .buttons button {
-  --_c: #88C100;
+  --_c: #6c757d;
   flex: calc(1.25 + var(--_s,0));
   min-width: 0;
   font-size: 20px;
@@ -314,7 +314,7 @@ button:active {
     bottom: 0;
     left: 0;
     width: 100%;
-    background-color: #333333; /* Updated color */
+    background-color: #d3d3d3; /* Updated color */
     color: #ffffff; /* Text color for better contrast */
     border-top-left-radius: 12px;
     border-top-right-radius: 12px;
@@ -368,7 +368,7 @@ button:active {
 .info-button {
     cursor: pointer;
     padding: 0.5rem;
-    background-color: #1f2937; /* Tailwind gray-800 */
+    background-color:#333333; /* Tailwind gray-800 */
     color: #ffffff;
     border-radius: 8px;
     transition: background-color 0.3s ease;
@@ -376,5 +376,5 @@ button:active {
 }
 
 .info-button:hover {
-    background-color: #4b5563; /* Tailwind gray-700 */
+    background-color: #d3d3d3; /* Tailwind gray-700 */
 }

@@ -21,19 +21,21 @@
             </div>
         </div>
     </div>
-    <div class="phrase">Welcome to our laboratory ! Select the dashboard you want to display : </div>
+    <div class="phrase">Welcome to our laboratory! Select the dashboard you want to display:</div>
     <div class="button-container">
-        <div class="button-row">
-            <button>Boolean</button>
-            <button>Fan Speed</button>
-            <button>Pressure</button>
-            <button>Production</button>
-        </div>
-        <div class="button-row center-buttons">
-            <button>Temperature</button>
-            <button>Test</button>
-            <button>Voltage</button>
-        </div>
+        <form action="/dashboard" method="GET">
+            <div class="button-row">
+                <button name="dashboard" value="boolean">Boolean</button>
+                <button name="dashboard" value="fan_speed">Fan Speed</button>
+                <button name="dashboard" value="pressure">Pressure</button>
+                <button name="dashboard" value="production">Production</button>
+            </div>
+            <div class="button-row center-buttons">
+                <button name="dashboard" value="temperature">Temperature</button>
+                <button name="dashboard" value="test">Test</button>
+                <button name="dashboard" value="voltage">Voltage</button>
+            </div>
+        </form>
     </div>
 </body>
 </html>
