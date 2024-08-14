@@ -7,33 +7,35 @@ function getQueryParam(param) {
 // Function to update the dashboard iframe source based on the selected dashboard
 function updateDashboard(dashboard) {
   const iframe = document.querySelector('iframe');
-  let dashboardUrl;
+  let dashname = dashboard.toLowerCase();
+  let uid = dashname.padEnd(14,"0");
+  let dashboardUrl = "http://grafana.h2f/d/"+uid+"/"+dashname+"?orgId=1&kiosk=1&theme=light&refresh=5s"
 
-  switch(dashboard) {
-      case 'boolean':
-          dashboardUrl = 'http://example.com/boolean-dashboard'; // Replace with actual URL
-          break;
-      case 'fan_speed':
-          dashboardUrl = 'http://example.com/fan-speed-dashboard'; // Replace with actual URL
-          break;
-      case 'pressure':
-          dashboardUrl = 'http://example.com/pressure-dashboard'; // Replace with actual URL
-          break;
-      case 'production':
-          dashboardUrl = 'http://example.com/production-dashboard'; // Replace with actual URL
-          break;
-      case 'temperature':
-          dashboardUrl = 'http://example.com/temperature-dashboard'; // Replace with actual URL
-          break;
-      case 'test':
-          dashboardUrl = 'http://example.com/test-dashboard'; // Replace with actual URL
-          break;
-      case 'voltage':
-          dashboardUrl = 'http://example.com/voltage-dashboard'; // Replace with actual URL
-          break;
-      default:
-          dashboardUrl = 'http://example.com/default-dashboard'; // Replace with actual URL
-  }
+  // switch(dashboard) {
+  //     case 'boolean':
+  //         dashboardUrl = 'http://example.com/boolean-dashboard'; // Replace with actual URL
+  //         break;
+  //     case 'fan_speed':
+  //         dashboardUrl = 'http://example.com/fan-speed-dashboard'; // Replace with actual URL
+  //         break;
+  //     case 'pressure':
+  //         dashboardUrl = 'http://example.com/pressure-dashboard'; // Replace with actual URL
+  //         break;
+  //     case 'production':
+  //         dashboardUrl = 'http://example.com/production-dashboard'; // Replace with actual URL
+  //         break;
+  //     case 'temperature':
+  //         dashboardUrl = 'http://example.com/temperature-dashboard'; // Replace with actual URL
+  //         break;
+  //     case 'test':
+  //         dashboardUrl = 'http://example.com/test-dashboard'; // Replace with actual URL
+  //         break;
+  //     case 'voltage':
+  //         dashboardUrl = 'http://example.com/voltage-dashboard'; // Replace with actual URL
+  //         break;
+  //     default:
+  //         dashboardUrl = 'http://example.com/default-dashboard'; // Replace with actual URL
+  // }
 
   if (iframe) {
     iframe.src = dashboardUrl;
