@@ -21,11 +21,17 @@
         <img src="css/img/project_logo.png" alt="Project Logo" class="logo dynamic-logo">
         <label class="switch">
             <input type="checkbox" id="darkModeSwitch">
-            <span class="slider">
-                <span class="sun"></span>
-                <span class="moon"></span>
-            </span>
+            <span class="slider"></span>
         </label>
+
+        <!-- Settings Button -->
+        <div class="settings-container">
+            <button id="settingsButton">⚙️</button>
+            <div id="settingsDropdown" class="dropdown-content">
+                <a href="login.html">Log In</a> <!-- Link to Login -->
+                <a href="/">Home</a> <!-- Updated Link to Welcome Page -->
+            </div>
+        </div>
     </div>
 
     <div class="container mt-4 d-flex">
@@ -41,8 +47,8 @@
 
     <div class="container mt-3 text-center">
         <div class="buttons">
-            <button id="startButton">Start</button>
-            <button id="stopButton">Stop</button>
+            <button id="startButton" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#pinModal" data-action="start">Start</button>
+            <button id="stopButton" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#pinModal" data-action="stop">Stop</button>
         </div>
     </div>
 
