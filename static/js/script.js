@@ -93,3 +93,14 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   
+  // Start/stop action
+  const startButton = document.getElementById('startButton');
+  const stopButton = document.getElementById('stopButton');
+
+  startButton.addEventListener('click', async function() {
+    const response = await fetch("/start");
+  });
+  stopButton.addEventListener('click', async function() {
+    const response = await fetch("/stop");
+  });
+
