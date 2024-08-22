@@ -1,0 +1,2 @@
+controller_ip: "127.0.0.1:102"
+controller_registers: registers.json

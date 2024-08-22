@@ -1,104 +1,53 @@
 #[macro_use]
 extern crate rocket;
-use std::collections::HashMap;
+use core::panic;
 use std::fs::File;
+use std::sync::Arc;
 
-use modbus_device::modbus_device_async::{ModbusConnexionAsync, ModbusDeviceAsync};
-use modbus_device::types::TCPContext;
-use modbus_device::utils::get_defs_from_json;
+use rocket::futures::lock::Mutex;
+use rocket::http::Status;
+use rocket::State;
+use s7_device::S7Device;
+
 use rocket::fs::FileServer;
 use rocket::response::Redirect;
 
-use modbus_device;
+mod control;
 
-extern crate custom_error;
-use custom_error::custom_error;
+mod app_config;
+use app_config::AppConfig;
 
-custom_error! {RegisterDoesNotExistError
-    NotFound{reg:String} = "Register {reg} does not exist on the definition"
+use clap::Parser;
+
+struct AppState {
+    device: Arc<Mutex<S7Device>>,
 }
 
-async fn start_electrolyzer() -> Result<String, Box<dyn std::error::Error>> {
-    let mut device = ModbusDeviceAsync::new(
-        TCPContext {
-            addr: "192.168.1.12:502".parse()?,
-        }
-        .into(),
-        HashMap::new(),
-        get_defs_from_json(File::open("holding_registers.json")?)?,
-    );
-    device.connect().await?;
-
-    let start_register = &device
-        .get_holding_register_by_name("Electrolyze".to_string())
-        .ok_or(RegisterDoesNotExistError::NotFound {
-            reg: "Electrolyze".to_string(),
-        })?
-        .clone();
-
-    let res = device
-        .write_holding_register(
-            start_register.clone(),
-            modbus_device::types::RegisterValue::Boolean(true),
-        )
-        .await;
-
-    match res {
-        Ok(_) => Ok("".to_string()),
-        Err(_) => Err(Box::new(RegisterDoesNotExistError::NotFound {
-            reg: "hjqdsghgs".to_string(),
-        })),
-    }
-}
-async fn stop_electrolyzer() -> Result<String, Box<dyn std::error::Error>> {
-    let mut device = ModbusDeviceAsync::new(
-        TCPContext {
-            addr: "192.168.1.12:502".parse()?,
-        }
-        .into(),
-        HashMap::new(),
-        get_defs_from_json(File::open("holding_registers.json")?)?,
-    );
-    device.connect().await?;
-
-    let start_register = &device
-        .get_holding_register_by_name("Electrolyze".to_string())
-        .ok_or(RegisterDoesNotExistError::NotFound {
-            reg: "Electrolyze".to_string(),
-        })?
-        .clone();
-
-    let res = device
-        .write_holding_register(
-            start_register.clone(),
-            modbus_device::types::RegisterValue::Boolean(false),
-        )
-        .await;
-
-    match res {
-        Ok(_) => Ok("".to_string()),
-        Err(_) => Err(Box::new(RegisterDoesNotExistError::NotFound {
-            reg: "hjqdsghgs".to_string(),
-        })),
-    }
+#[derive(Parser, Debug)]
+#[command(version, about, long_about = None)]
+struct Args {
+    #[arg(
+        short,
+        long,
+        default_value = "config.yaml",
+        help = "Config path",
+        long_help = "Where to find the config file"
+    )]
+    config_file: String,
 }
 
 #[get("/")]
-async fn start() -> Result<Redirect, String> {
-    match start_electrolyzer().await {
+async fn start(state: &State<AppState>) -> Result<Redirect, Status> {
+    match control::start_electrolyzer(state.device.clone()).await {
         Ok(_val) => Ok(Redirect::to(uri!("/index.html"))),
-        Err(err) => Err(format!(
-            "Could not initiate connexion to the modbus device {err}"
-        )),
+        Err(_err) => Err(Status::InternalServerError),
     }
 }
 #[get("/")]
-async fn stop() -> Result<Redirect, String> {
-    match stop_electrolyzer().await {
+async fn stop(state: &State<AppState>) -> Result<Redirect, Status> {
+    match control::stop_electrolyzer(state.device.clone()).await {
         Ok(_val) => Ok(Redirect::to(uri!("/index.html"))),
-        Err(err) => Err(format!(
-            "Could not initiate connexion to the modbus device {err}"
-        )),
+        Err(_err) => Err(Status::InternalServerError),
     }
 }
 
@@ -109,9 +58,45 @@ fn index() -> Redirect {
 
 #[launch]
 fn rocket() -> _ {
+    let args = Args::parse();
+
+    let config = config::Config::builder()
+        .add_source(config::File::with_name(&args.config_file))
+        .build()
+        .unwrap();
+
+    let app: AppConfig = config.try_deserialize().unwrap();
+
+    let regs_file: File = match File::open(&app.controller_registers) {
+        Ok(file) => file,
+        Err(err) => panic!(
+            "Could not open registers definition file : {err} ({0})",
+            app.controller_registers
+        ),
+    };
+
+    let device = S7Device::new(
+        match app.controller_ip.parse() {
+            Ok(val) => val,
+            Err(err) => panic!(
+                "Could not parse controller adress : {err:?} ({0})",
+                app.controller_ip
+            ),
+        },
+        match s7_device::utils::get_defs_from_json(regs_file) {
+            Ok(regs) => regs,
+            Err(err) => {
+                panic!("There was an error reading registers definition from file : {err:?}")
+            }
+        },
+    );
+
     rocket::build()
         .mount("/", routes![index])
         .mount("/", FileServer::from("./static"))
         .mount("/start", routes![start])
         .mount("/stop", routes![stop])
+        .manage(AppState {
+            device: Arc::new(Mutex::new(device)),
+        })
 }

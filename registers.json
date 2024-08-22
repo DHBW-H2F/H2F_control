@@ -1,0 +1,17 @@
+[
+  {
+    "name": "Start/Stop",
+    "id": "DB1.DBX10.0",
+    "type": "BOOL"
+  },
+  {
+    "name": "Restart",
+    "id": "DB1.DBX20.0",
+    "type": "BOOL"
+  },
+  {
+    "name": "Production rate",
+    "id": "DB1.DBD30",
+    "type": "FLOAT"
+  }
+]
