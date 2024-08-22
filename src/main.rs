@@ -38,7 +38,8 @@ struct Args {
 
 #[get("/")]
 async fn start(state: &State<AppState>) -> Result<Redirect, Status> {
-    match control::start_electrolyzer(state.device.clone()).await {
+    let res = control::start_electrolyzer(state.device.clone()).await;
+    match res {
         Ok(_val) => Ok(Redirect::to(uri!("/index.html"))),
         Err(_err) => Err(Status::InternalServerError),
     }
@@ -46,6 +47,13 @@ async fn start(state: &State<AppState>) -> Result<Redirect, Status> {
 #[get("/")]
 async fn stop(state: &State<AppState>) -> Result<Redirect, Status> {
     match control::stop_electrolyzer(state.device.clone()).await {
+        Ok(_val) => Ok(Redirect::to(uri!("/index.html"))),
+        Err(_err) => Err(Status::InternalServerError),
+    }
+}
+#[get("/?<rate>")]
+async fn prod_rate(rate: f32, state: &State<AppState>) -> Result<Redirect, Status> {
+    match control::set_rate(state.device.clone(), rate).await {
         Ok(_val) => Ok(Redirect::to(uri!("/index.html"))),
         Err(_err) => Err(Status::InternalServerError),
     }
@@ -96,6 +104,7 @@ fn rocket() -> _ {
         .mount("/", FileServer::from("./static"))
         .mount("/start", routes![start])
         .mount("/stop", routes![stop])
+        .mount("/prodRate", routes![prod_rate])
         .manage(AppState {
             device: Arc::new(Mutex::new(device)),
         })

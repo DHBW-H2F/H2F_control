@@ -10,7 +10,7 @@
     "type": "BOOL"
   },
   {
-    "name": "Production rate",
+    "name": "Production_rate",
     "id": "DB1.DBD30",
     "type": "FLOAT"
   }

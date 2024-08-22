@@ -11,32 +11,6 @@ function updateDashboard(dashboard) {
   let uid = dashname.padEnd(14,"0");
   let dashboardUrl = "http://grafana.h2f/d/"+uid+"/"+dashname+"?orgId=1&kiosk=1&theme=light&refresh=5s"
 
-  // switch(dashboard) {
-  //     case 'boolean':
-  //         dashboardUrl = 'http://example.com/boolean-dashboard'; // Replace with actual URL
-  //         break;
-  //     case 'fan_speed':
-  //         dashboardUrl = 'http://example.com/fan-speed-dashboard'; // Replace with actual URL
-  //         break;
-  //     case 'pressure':
-  //         dashboardUrl = 'http://example.com/pressure-dashboard'; // Replace with actual URL
-  //         break;
-  //     case 'production':
-  //         dashboardUrl = 'http://example.com/production-dashboard'; // Replace with actual URL
-  //         break;
-  //     case 'temperature':
-  //         dashboardUrl = 'http://example.com/temperature-dashboard'; // Replace with actual URL
-  //         break;
-  //     case 'test':
-  //         dashboardUrl = 'http://example.com/test-dashboard'; // Replace with actual URL
-  //         break;
-  //     case 'voltage':
-  //         dashboardUrl = 'http://example.com/voltage-dashboard'; // Replace with actual URL
-  //         break;
-  //     default:
-  //         dashboardUrl = 'http://example.com/default-dashboard'; // Replace with actual URL
-  // }
-
   if (iframe) {
     iframe.src = dashboardUrl;
   } else {
@@ -103,4 +77,19 @@ document.addEventListener('DOMContentLoaded', function() {
   stopButton.addEventListener('click', async function() {
     const response = await fetch("/stop");
   });
+
+
+  // Production rate
+  const prodRate = document.getElementById('productionRange');
+  const prodRateDisp = document.getElementById('rangeValue');
+
+  prodRate.addEventListener('input', function() {
+    prodRateDisp.innerHTML = prodRate.value + "%";
+  })
+  prodRate.addEventListener("change", async function () {
+    const request = await fetch("/prodRate?" + new URLSearchParams({
+        rate: prodRate.value,
+      })
+    );
+  })
 
