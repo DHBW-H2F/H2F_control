@@ -23,6 +23,8 @@ struct AppState {
     device: Arc<Mutex<S7Device>>,
 }
 
+// TODO: Add Reboot button
+
 #[derive(Parser, Debug)]
 #[command(version, about, long_about = None)]
 struct Args {
