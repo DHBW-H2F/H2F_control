@@ -1,32 +1,117 @@
-
 .blue {
   background-color: #267bfc;
 }
 
 #header {
-  height: 80px;
+  position: relative; /* Pour que les enfants avec position: absolute soient positionnés relativement à ce conteneur */
+  height: 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  flex-wrap: wrap; /* Pour permettre aux éléments de passer à la ligne si nécessaire */
 }
 
-#panelbutton{
-  display: flex;
-  align-content: center;
-  justify-content: center;
+#header .dropdown, #header .btn-group {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%); /* Centrer verticalement */
+}
+
+#header .dropdown {
+  left: 20px;
+}
+
+#header .btn-group {
+  right: 20px;
 }
 
 #title {
-  display: flex;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Centrer horizontalement et verticalement */
   font-size: 24px;
   font-weight: bold;
-  text-align: center;
-  align-content: center;
-  justify-content: center;
+  color: white;
+  margin: 0; /* Supprimer les marges pour un alignement précis */
 }
 
-#modalbuttons{
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.btn-success, .btn-danger {
+  margin-bottom: 10px;
+}
+
+.btn-success, .btn-danger {
+  font-size: 1.25rem;
+  padding: 0.75rem 1.25rem;
+  border-width: 2px;
+}
+
+.btn-success, .btn-danger {
+  border-radius: 0.5rem;
+}
+
+.d-grid .btn {
+  margin-bottom: 0.5rem; /* Espacement entre les boutons */
+}
+
+.w-100 {
+  width: 100%;
+}
+
+iframe {
+  border: none;
+}
+
+/* Container pour le slider et sa valeur */
+.slider-container {
   display: flex;
+  flex-direction: column; /* Aligne les éléments verticalement */
+  align-items: center; /* Centre horizontalement les éléments */
+  width: 100%; /* Ajuste selon tes besoins */
 }
 
-#ShowStatus{
-  text-align: center;
-  font-size: 20px;
+/* Style de la valeur du slider */
+.slider-value {
+  font-size: 1.25rem; /* Augmente la taille du texte */
+  font-weight: bold; /* Rend le texte plus épais */
+  color: #333; /* Choisis une couleur qui contraste avec le fond */
+  background-color: #fff; /* Fond blanc pour contraster avec la couleur du texte */
+  padding: 0.25rem 0.5rem; /* Espacement autour du texte */
+  border-radius: 0.25rem; /* Coins arrondis pour un effet moderne */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2); /* Ombre pour un effet de profondeur */
+  margin-bottom: 0.5rem; /* Espacement entre la valeur et le slider */
+}
+
+/* Style du slider */
+.form-range {
+  width: 100%; /* Assure que le slider prend toute la largeur disponible */
+}
+
+/* Responsive adjustments */
+@media (max-width: 767.98px) {
+  #header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  #title {
+    text-align: left;
+    margin-top: 10px;
+  }
+
+  #header .dropdown, #header .btn-group {
+    position: static; /* Revenir à la disposition normale sur petits écrans */
+    transform: none; /* Supprimer les transformations verticales */
+    margin-bottom: 10px; /* Espacement pour les petits écrans */
+  }
+}
+
+/* Masquer le bouton sur ConfigurationPanel.html */
+body.configuration-panel #configPanelButton {
+  display: none; /* Masque le bouton seulement sur la page ConfigurationPanel.html */
 }

@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>H2 Live Production Dashboard</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- JS -->
+    <script src="js/jquery-3.7.1.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/script.js"></script>
+</head>
+
+<body>
+    <div class="container-fluid blue" id="header">
+        <div class="dropdown">
+            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                <!-- Le texte sera mis à jour par JavaScript -->
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <li><a class="dropdown-item" href="ProductionDashboard.html">Production Dashboard</a></li>
+                <li><a class="dropdown-item" href="LiveDashboard.html">Live Production Dashboard</a></li>
+            </ul>
+        </div>
+        <h1 id="title">H2 Live Production Dashboard</h1>
+        <div class="btn-group">
+            <button class="btn btn-secondary" id="refreshButton">Rafraîchir la page</button>
+            <a href="ConfigurationPanel.html" class="btn btn-primary">Configuration Panel</a>
+        </div>
+    </div>
+
+
+        <iframe src="http://141.72.13.23:3000/d/bdwwc819l6j9ca/live-data?orgId=1&from=1725470244458&to=1725471144459&theme=light" width="1500" height="2000" frameborder="0"></iframe>
+
+      </body>
+</html>
