@@ -104,7 +104,7 @@ async fn stop() -> Result<Redirect, String> {
 
 #[get("/")]
 fn index() -> Redirect {
-    Redirect::to(uri!("/index.html"))
+    Redirect::to(uri!("/LiveDashboard.html"))
 }
 
 #[launch]
