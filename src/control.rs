@@ -41,3 +41,16 @@ pub async fn set_rate(
         .write_register_by_name("Production_rate", &Value::Float32(rate))
         .await
 }
+pub async fn restart_electrolyzer(
+    device_m: Arc<Mutex<impl IndustrialDevice>>,
+) -> Result<(), IndustrialDeviceError> {
+    let mut device = device_m.lock().await;
+    device.connect().await?;
+
+    device
+        .write_register_by_name("Restart", &Value::Boolean(true))
+        .await?;
+    device
+        .write_register_by_name("Restart", &Value::Boolean(false))
+        .await
+}

@@ -6,6 +6,7 @@ use std::sync::Arc;
 
 use rocket::futures::lock::Mutex;
 use rocket::http::Status;
+use rocket::response::status::Custom;
 use rocket::State;
 use s7_device::S7Device;
 
@@ -39,25 +40,35 @@ struct Args {
 }
 
 #[get("/")]
-async fn start(state: &State<AppState>) -> Result<Redirect, Status> {
+async fn start(state: &State<AppState>) -> Result<(), Custom<String>> {
     let res = control::start_electrolyzer(state.device.clone()).await;
     match res {
-        Ok(_val) => Ok(Redirect::to(uri!("/index.html"))),
-        Err(_err) => Err(Status::InternalServerError),
+        Ok(_) => Ok(()),
+        Err(err) => Err(Custom(Status::InternalServerError, format!("{err:?}"))),
     }
 }
 #[get("/")]
-async fn stop(state: &State<AppState>) -> Result<Redirect, Status> {
-    match control::stop_electrolyzer(state.device.clone()).await {
-        Ok(_val) => Ok(Redirect::to(uri!("/index.html"))),
-        Err(_err) => Err(Status::InternalServerError),
+async fn stop(state: &State<AppState>) -> Result<(), Custom<String>> {
+    let res = control::stop_electrolyzer(state.device.clone()).await;
+    match res {
+        Ok(_) => Ok(()),
+        Err(err) => Err(Custom(Status::InternalServerError, format!("{err:?}"))),
     }
 }
 #[get("/?<rate>")]
-async fn prod_rate(rate: f32, state: &State<AppState>) -> Result<Redirect, Status> {
-    match control::set_rate(state.device.clone(), rate).await {
-        Ok(_val) => Ok(Redirect::to(uri!("/index.html"))),
-        Err(_err) => Err(Status::InternalServerError),
+async fn prod_rate(rate: f32, state: &State<AppState>) -> Result<(), Custom<String>> {
+    let res = control::set_rate(state.device.clone(), rate).await;
+    match res {
+        Ok(_) => Ok(()),
+        Err(err) => Err(Custom(Status::InternalServerError, format!("{err:?}"))),
+    }
+}
+#[get("/")]
+async fn restart(state: &State<AppState>) -> Result<(), Custom<String>> {
+    let res = control::restart_electrolyzer(state.device.clone()).await;
+    match res {
+        Ok(_) => Ok(()),
+        Err(err) => Err(Custom(Status::InternalServerError, format!("{err:?}"))),
     }
 }
 
@@ -107,6 +118,7 @@ fn rocket() -> _ {
         .mount("/start", routes![start])
         .mount("/stop", routes![stop])
         .mount("/prodRate", routes![prod_rate])
+        .mount("/restart", routes![restart])
         .manage(AppState {
             device: Arc::new(Mutex::new(device)),
         })
