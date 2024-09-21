@@ -23,4 +23,16 @@ document.addEventListener("DOMContentLoaded", function() {
             rate: prodRate.value,
         }));
     })
+
+    // Fonction pour mettre à jour la valeur du slider
+    function updateValue(value) {
+        document.getElementById('sliderValue').textContent = value;
+    }
+
+    // Événement de mise à jour du slider
+    var slider = document.getElementById('slider');
+    slider.addEventListener('input', function() {
+        updateValue(this.value);
+    });
+
 });
