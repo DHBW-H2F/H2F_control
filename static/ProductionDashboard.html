@@ -1,15 +1,16 @@
 <!doctype html>
 <html lang="en">
 <head>
+
     <meta charset="utf-8" />
     <title>Production Dashboard</title>
 
-    <!-- CSS -->
+    <!-- CSS Dependencies -->
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/flatpickr.min.css">
     <link rel="stylesheet" href="css/style.css">
 
-    <!-- JS -->
+    <!-- JS Dependencies -->
     <script src="js/jquery-3.7.1.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/flatpickr.min.js"></script>
@@ -17,47 +18,62 @@
 </head>
 
 <body>
+    <!-- Main container for the dashboard header and controls -->
     <div class="container-fluid blue" id="header">
+        <!-- Dropdown menu for selecting between different dashboards -->
         <div class="dropdown">
+            <!-- Dropdown button, updated dynamically by script.js based on current page -->
             <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                <!-- Le texte sera mis à jour par JavaScript -->
             </button>
+            <!-- Dropdown menu with options to navigate between dashboards -->
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <li><a class="dropdown-item" href="ProductionDashboard.html">Production Dashboard</a></li>
                 <li><a class="dropdown-item" href="LiveDashboard.html">Live Production Dashboard</a></li>
             </ul>
         </div>
-         <!-- Sélecteur de date From et To -->
-            <div id="dateSelectors">
-                <input type="text" id="datePickerFrom" class="form-control" style="width: 200px; margin: 0 10px;" placeholder="Select Start Date">
-                <input type="text" id="datePickerTo" class="form-control" style="width: 200px;" placeholder="Select End Date">
-            </div>
 
+        <!-- Date selection inputs: Start date (From) and End date (To) -->
+        <div id="dateSelectors">
+            <!-- Flatpickr input for selecting the start date -->
+            <input type="text" id="datePickerFrom" class="form-control" style="width: 200px; height: 2rem; margin: 0 10px;" placeholder="Select Start Date">
+            <!-- Flatpickr input for selecting the end date -->
+            <input type="text" id="datePickerTo" class="form-control" style="width: 200px; height: 2rem;" placeholder="Select End Date">
+        </div>
+
+        <!-- Header title of the current dashboard page -->
         <h1 id="title">H2 Production Dashboard</h1>
+
+        <!-- Button group: includes Configuration Panel and Refresh buttons -->
         <div class="btn-group">
-          <a href="ConfigurationPanel.html" class="btn btn-primary" id="configPanelButton">Configuration Panel</a>
-          <button class="btn btn-secondary" id="refreshButton">Rafraîchir la page</button>
-            
+            <!-- Button to navigate to the Configuration Panel page -->
+            <a href="ConfigurationPanel.html" class="btn btn-primary" id="configPanelButton">Configuration Panel</a>
+            <!-- Button to refresh the current page -->
+            <button class="btn btn-secondary" id="refreshButton">Rafraîchir la page</button>
         </div>
     </div>
+
+    <!-- Main container for displaying dashboard charts -->
     <div class="container-fluid" id="dashboardContainer">
+        <!-- Row to hold the first two graphs side by side -->
         <div class="row">
-            <!-- Les deux premiers graphiques côte à côte -->
             <div class="col-md-6 p-1">
+                <!-- Production Rate graph -->
                 <iframe src="http://141.72.13.23:3000/d-solo/fdrjcrk05o0zka/production?orgId=1&panelId=7&theme=light"></iframe>
             </div>
             <div class="col-md-6 p-1">
+                <!-- Watt Consumption graph -->
                 <iframe src="http://141.72.13.23:3000/d-solo/fdrjcrk05o0zka/production?orgId=1&panelId=7&theme=light"></iframe>
             </div>
         </div>
+
+        <!-- Row for the third graph, spanning the entire width -->
         <div class="row">
-            <!-- Le troisième graphique prenant toute la largeur en dessous des deux premiers -->
             <div class="col-12 p-1">
+                <!-- Production graph -->
                 <iframe src="http://141.72.13.23:3000/d-solo/fdrjcrk05o0zka/production?orgId=1&panelId=1&theme=light"></iframe>
             </div>
         </div>
     </div>
-    
-    <!---<iframe src="http://141.72.13.23:3000/d/fdrjcrk05o0zka/production?orgId=1&refresh=1m&theme=light" width="1500" height="2000" frameborder="0"></iframe> --->
+
 </body>
 </html>

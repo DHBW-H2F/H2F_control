@@ -1,43 +1,56 @@
 <!doctype html>
 <html lang="en">
 <head>
+
     <meta charset="utf-8" />
     <title>Configuration Panel</title>
 
-    <!-- CSS -->
+    <!-- CSS Dependencies -->
     <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/flatpickr.min.css">
     <link rel="stylesheet" href="css/style.css">
 
-    <!-- JS -->
+    <!-- JS Dependencies -->
     <script src="js/jquery-3.7.1.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/flatpickr.min.js"></script>
     <script src="js/script.js"></script>
-    <script src="js/script_config.js"></script>
 </head>
 
 <body>
+    <!-- Main container for the dashboard header and controls -->
     <div class="container-fluid blue" id="header">
+        <!-- Dropdown menu for switching between dashboards -->
         <div class="dropdown">
+            <!-- Dropdown button, dynamically updated by script.js to reflect the current page -->
             <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                <!-- Le texte sera mis à jour par JavaScript -->
             </button>
+            <!-- Dropdown options linking to dashboard pages -->
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <li><a class="dropdown-item" href="ProductionDashboard.html">Production Dashboard</a></li>
                 <li><a class="dropdown-item" href="LiveDashboard.html">Live Production Dashboard</a></li>
             </ul>
         </div>
+
+        <!-- Page title -->
         <h1 id="title">Configuration Panel</h1>
+
+        <!-- Buttons group for page control -->
         <div class="btn-group">
+            <!-- Button to refresh the page -->
             <button class="btn btn-secondary" id="refreshButton">Rafraîchir la page</button>
+            <!-- Configuration Panel button, hidden with 'd-none' class since we're already on this page -->
             <a href="ConfigurationPanel.html" class="btn btn-primary d-none" id="configPanelButton">Configuration Panel</a>
         </div>
     </div>
 
+    <!-- Main container for configuration options -->
     <div class="container mt-5">
         <div class="row mb-4">
-            <!-- Colonne pour Start and Stop -->
+            <!-- Left Column for Start, Stop, and Restart controls -->
             <div class="col-md-6">
                 <h2>Start and Stop the system</h2>
+                <!-- Buttons to start, stop, and restart the system, using a grid to space them evenly -->
                 <div class="d-grid gap-2">
                     <button type="button" class="btn btn-success w-100" id="startButton">Start</button>
                     <button type="button" class="btn btn-danger w-100" id="stopButton">Stop</button>
@@ -45,15 +58,18 @@
                 </div>
             </div>
 
-            <!-- Colonne pour Select Value -->
+            <!-- Right Column for selecting a production value -->
             <div class="col-md-6">
                 <h2>Select a Production Value</h2>
+                <!-- Slider input to select a value, with a label showing the current value -->
                 <div class="form-group">
                     <label for="slider">Choose a value:</label>
                     <input type="range" class="form-range" id="slider" min="60" max="100" step="0.1" value="60">
+                    <!-- The current value of the slider is displayed here -->
                     <span id="sliderValue" class="slider-value">60.0</span>
                 </div>
 
+                <!-- Embedded Grafana iframe displaying real-time data -->
                 <iframe src="http://grafana.h2f/d/live_data00000/live-data?orgId=1&from=now-24h&to=now&kiosk=1&theme=light&refresh=5s" width="100%" height="200" frameborder="0" class="mt-4"></iframe>
             </div>
         </div>

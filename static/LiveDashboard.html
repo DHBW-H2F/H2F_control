@@ -1,53 +1,71 @@
 <!doctype html>
 <html lang="en">
 <head>
+
     <meta charset="utf-8" />
+
     <title>H2 Live Production Dashboard</title>
 
-    <!-- CSS -->
+    <!-- CSS Dependencies -->
     <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/flatpickr.min.css">
     <link rel="stylesheet" href="css/style.css">
 
-    <!-- JS -->
+    <!-- JS Dependencies -->
     <script src="js/jquery-3.7.1.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/flatpickr.min.js"></script>
     <script src="js/script.js"></script>
 </head>
 
 <body>
+    <!-- Header section for navigation and controls -->
     <div class="container-fluid blue" id="header">
+        <!-- Dropdown menu for switching between dashboards -->
         <div class="dropdown">
+            <!-- Dropdown button, updated dynamically via script.js to reflect the current page -->
             <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                <!-- Le texte sera mis à jour par JavaScript -->
             </button>
+            <!-- Dropdown options linking to other dashboard pages -->
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <li><a class="dropdown-item" href="ProductionDashboard.html">Production Dashboard</a></li>
                 <li><a class="dropdown-item" href="LiveDashboard.html">Live Production Dashboard</a></li>
             </ul>
         </div>
+        
+        <!-- Header title of the current dashboard page -->
         <h1 id="title">H2 Live Production Dashboard</h1>
+
+        <!-- Button group: includes Configuration Panel and Refresh buttons -->
         <div class="btn-group">
+            <!-- Button to navigate to the Configuration Panel page -->
+            <a href="ConfigurationPanel.html" class="btn btn-primary" id="configPanelButton">Configuration Panel</a>
+            <!-- Button to refresh the current page -->
             <button class="btn btn-secondary" id="refreshButton">Rafraîchir la page</button>
-            <a href="ConfigurationPanel.html" class="btn btn-primary">Configuration Panel</a>
         </div>
     </div>
 
+    <!-- Main container for displaying dashboard charts -->
     <div class="container-fluid" id="dashboardContainer">
+        <!-- Row to hold the first two graphs side by side -->
         <div class="row">
-            <!-- Les deux premiers graphiques côte à côte -->
             <div class="col-md-6 p-1">
+                <!-- Production Rate graph -->
                 <iframe src="http://141.72.13.23:3000/d-solo/bdwwc819l6j9ca/live-data?orgId=1&theme=light&panelId=1"></iframe>
-                        </div>
+            </div>
             <div class="col-md-6 p-1">
+                <!-- Watt Consumption graph -->
                 <iframe src="http://141.72.13.23:3000/d-solo/bdwwc819l6j9ca/live-data?orgId=1&theme=light&panelId=2"></iframe>
             </div>
         </div>
+
+        <!-- Row for the third graph, spanning the entire width -->
         <div class="row">
-            <!-- Le troisième graphique prenant toute la largeur en dessous des deux premiers -->
             <div class="col-12 p-1">
+                <!-- Production graph -->
                 <iframe src="http://141.72.13.23:3000/d-solo/bdwwc819l6j9ca/live-data?orgId=1&theme=light&panelId=3"></iframe>
             </div>
         </div>
     </div>
-      </body>
+</body>
 </html>

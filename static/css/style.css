@@ -1,99 +1,104 @@
-/* Structure générale */
+/* General Structure */
 .blue {
-  background-color: #267bfc;
+  background-color: #267bfc; /* Set the background color for the blue sections */
 }
 
-/* En-tête */
+/* Header Styles */
 #header {
-  position: relative;
-  height: 5rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 20px;
-  flex-wrap: wrap;
+  position: relative; /* Allows for absolute positioning of child elements */
+  height: 5rem; /* Fixed height for the header */
+  display: flex; /* Use flexbox for layout */
+  align-items: center; /* Center items vertically */
+  justify-content: space-between; /* Space items evenly */
+  padding: 0 20px; /* Horizontal padding */
+  flex-wrap: wrap; /* Allow wrapping of items on smaller screens */
 }
 
-#header .dropdown, #header .btn-group {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
+#header .dropdown, 
+#header .btn-group {
+  position: absolute; /* Position these elements absolutely within the header */
+  top: 50%; /* Center vertically */
+  transform: translateY(-50%); /* Offset by half their height */
 }
 
 #header .dropdown {
-  left: 20px;
+  left: 20px; /* Position dropdown to the left */
 }
 
 #header .btn-group {
-  right: 20px;
+  right: 20px; /* Position button group to the right */
 }
 
+/* Date Selectors */
 #dateSelectors {
-  display: flex;
-  align-items: center;
-  margin-left: 220px; /* Décaler les sélecteurs de date vers la droite */
+  display: flex; /* Use flexbox for layout */
+  flex-direction: column; /* Stack items vertically */
+  align-items: center; /* Center items horizontally */
+  margin-left: 220px; /* Space from the left edge */
 }
 
-#datePickerFrom, #datePickerTo {
-  height: 2.5rem;
-  padding: 0.5rem;
-  font-size: 1rem;
-  border-radius: 0.25rem;
-  border: 1px solid #ccc;
-  margin-right: 10px; /* Espacement entre les deux sélecteurs de date */
+#datePickerFrom, 
+#datePickerTo {
+  height: 2.5rem; /* Fixed height for date pickers */
+  padding: 0.5rem; /* Padding inside the input */
+  font-size: 1rem; /* Font size for input text */
+  border-radius: 0.25rem; /* Rounded corners */
+  border: 1px solid #ccc; /* Light gray border */
+  margin-top: 5px; /* Space above the inputs */
 }
 
-
+/* Title Styles */
 #title {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 24px;
-  font-weight: bold;
-  color: white;
-  margin: 0;
+  position: absolute; /* Position the title absolutely within the header */
+  top: 50%; /* Center vertically */
+  left: 50%; /* Center horizontally */
+  transform: translate(-50%, -50%); /* Offset by half its width and height */
+  font-size: 24px; /* Font size for the title */
+  font-weight: bold; /* Bold text */
+  color: white; /* White text color */
+  margin: 0; /* Remove default margin */
 }
 
-/* Graphiques */
+/* Dashboard Container Styles */
 #dashboardContainer {
-  height: calc(100vh - 5rem); /* 100% de la hauteur moins la barre bleue */
+  height: calc(100vh - 5rem); /* Full viewport height minus header height */
 }
 
 #dashboardContainer .row {
-  height: 50%; /* Chaque ligne prend 50% de la hauteur du conteneur */
+  height: 50%; /* Each row takes 50% of the container's height */
 }
 
 #dashboardContainer .row .col-md-6 {
-  height: 100%; /* Les colonnes doivent prendre toute la hauteur de la ligne */
+  height: 100%; /* Columns take full height of their row */
 }
 
 iframe {
-  width: 100%;
-  height: 100%;
-  border: none;
+  width: 100%; /* Full width for iframes */
+  height: 100%; /* Full height for iframes */
+  border: none; /* Remove default border */
 }
 
-/* Responsive adjustments */
+/* Responsive Adjustments */
 @media (max-width: 767.98px) {
   #header {
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: column; /* Stack items vertically on smaller screens */
+    align-items: flex-start; /* Align items to the start */
   }
 
   #title {
-    text-align: left;
-    margin-top: 10px;
+    text-align: left; /* Align title text to the left */
+    margin-top: 10px; /* Add space above the title */
   }
 
-  #header .dropdown, #header .btn-group {
-    position: static;
-    transform: none;
-    margin-bottom: 10px;
+  #header .dropdown, 
+  #header .btn-group {
+    position: static; /* Reset positioning */
+    transform: none; /* Remove transform */
+    margin-bottom: 10px; /* Add space below these elements */
   }
 }
 
-/* Masquer le bouton sur ConfigurationPanel.html */
+/* Hide the button on ConfigurationPanel.html */
 body.configuration-panel #configPanelButton {
-  display: none;
+  display: none; /* Hide the configuration panel button when on that page */
 }
