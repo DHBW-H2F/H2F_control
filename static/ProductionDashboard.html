@@ -6,11 +6,13 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/flatpickr.min.css">
     <link rel="stylesheet" href="css/style.css">
 
     <!-- JS -->
     <script src="js/jquery-3.7.1.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/flatpickr.min.js"></script>
     <script src="js/script.js"></script>
 </head>
 
@@ -25,14 +27,37 @@
                 <li><a class="dropdown-item" href="LiveDashboard.html">Live Production Dashboard</a></li>
             </ul>
         </div>
-        <h1 id="title">Production Dashboard</h1>
+         <!-- Sélecteur de date From et To -->
+            <div id="dateSelectors">
+                <input type="text" id="datePickerFrom" class="form-control" style="width: 200px; margin: 0 10px;" placeholder="Select Start Date">
+                <input type="text" id="datePickerTo" class="form-control" style="width: 200px;" placeholder="Select End Date">
+            </div>
+
+        <h1 id="title">H2 Production Dashboard</h1>
         <div class="btn-group">
           <a href="ConfigurationPanel.html" class="btn btn-primary" id="configPanelButton">Configuration Panel</a>
           <button class="btn btn-secondary" id="refreshButton">Rafraîchir la page</button>
             
         </div>
     </div>
-
-    <iframe src="http://141.72.13.23:3000/d/fdrjcrk05o0zka/production?orgId=1&refresh=1m&theme=light" width="1500" height="2000" frameborder="0"></iframe>
+    <div class="container-fluid" id="dashboardContainer">
+        <div class="row">
+            <!-- Les deux premiers graphiques côte à côte -->
+            <div class="col-md-6 p-1">
+                <iframe src="http://141.72.13.23:3000/d-solo/fdrjcrk05o0zka/production?orgId=1&panelId=7&theme=light"></iframe>
+            </div>
+            <div class="col-md-6 p-1">
+                <iframe src="http://141.72.13.23:3000/d-solo/fdrjcrk05o0zka/production?orgId=1&panelId=7&theme=light"></iframe>
+            </div>
+        </div>
+        <div class="row">
+            <!-- Le troisième graphique prenant toute la largeur en dessous des deux premiers -->
+            <div class="col-12 p-1">
+                <iframe src="http://141.72.13.23:3000/d-solo/fdrjcrk05o0zka/production?orgId=1&panelId=1&theme=light"></iframe>
+            </div>
+        </div>
+    </div>
+    
+    <!---<iframe src="http://141.72.13.23:3000/d/fdrjcrk05o0zka/production?orgId=1&refresh=1m&theme=light" width="1500" height="2000" frameborder="0"></iframe> --->
 </body>
 </html>

@@ -32,8 +32,22 @@
         </div>
     </div>
 
-
-        <iframe src="http://141.72.13.23:3000/d/bdwwc819l6j9ca/live-data?orgId=1&from=1725470244458&to=1725471144459&theme=light" width="1500" height="2000" frameborder="0"></iframe>
-
+    <div class="container-fluid" id="dashboardContainer">
+        <div class="row">
+            <!-- Les deux premiers graphiques côte à côte -->
+            <div class="col-md-6 p-1">
+                <iframe src="http://141.72.13.23:3000/d-solo/bdwwc819l6j9ca/live-data?orgId=1&theme=light&panelId=1"></iframe>
+                        </div>
+            <div class="col-md-6 p-1">
+                <iframe src="http://141.72.13.23:3000/d-solo/bdwwc819l6j9ca/live-data?orgId=1&theme=light&panelId=2"></iframe>
+            </div>
+        </div>
+        <div class="row">
+            <!-- Le troisième graphique prenant toute la largeur en dessous des deux premiers -->
+            <div class="col-12 p-1">
+                <iframe src="http://141.72.13.23:3000/d-solo/bdwwc819l6j9ca/live-data?orgId=1&theme=light&panelId=3"></iframe>
+            </div>
+        </div>
+    </div>
       </body>
 </html>
