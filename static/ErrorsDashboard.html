@@ -3,8 +3,7 @@
 <head>
 
     <meta charset="utf-8" />
-
-    <title>H2 Live Production Dashboard</title>
+    <title>Errors Dashboard</title>
 
     <!-- CSS Dependencies -->
     <link rel="stylesheet" href="css/bootstrap.css">
@@ -35,7 +34,7 @@
         </div>
         
         <!-- Header title of the current dashboard page -->
-        <h1 id="title">H2 Live Production Dashboard</h1>
+        <h1 id="title">Errors Dashboard</h1>
 
         <!-- Button group: includes Configuration Panel and Refresh buttons -->
         <div class="btn-group">
@@ -48,23 +47,11 @@
 
     <!-- Main container for displaying dashboard charts -->
     <div class="container-fluid" id="dashboardContainer">
-        <!-- Row to hold the first two graphs side by side -->
+        <!-- Row to hold the error graphs -->
         <div class="row">
             <div class="col-md-6 p-1">
-                <!-- Production Rate graph -->
-                <iframe src="http://grafana.h2f/d-solo/live_data00000/live-data?orgId=1&theme=light&panelId=1&refresh=15s"></iframe>
-            </div>
-            <div class="col-md-6 p-1">
-                <!-- Watt Consumption graph -->
-                <iframe src="http://grafana.h2f/d-solo/live_data00000/live-data?orgId=1&&theme=light&panelId=2&refresh=15s"></iframe>
-            </div>
-        </div>
-
-        <!-- Row for the third graph, spanning the entire width -->
-        <div class="row">
-            <div class="col-12 p-1">
-                <!-- Production graph -->
-                <iframe src="http://grafana.h2f/d-solo/live_data00000/live-data?orgId=1&&theme=light&panelId=3&refresh=15s"></iframe>
+                <!-- Errors graph -->
+                <iframe src="http://grafana.h2f/d-solo/error_00000000/errors?orgId=1&theme=light&panelId=1&refresh=15s"></iframe>
             </div>
         </div>
     </div>
