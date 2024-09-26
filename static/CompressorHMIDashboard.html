@@ -3,8 +3,7 @@
 <head>
 
     <meta charset="utf-8" />
-
-    <title>H2 Live Production Dashboard</title>
+    <title>Comporessor HMI Dashboard</title>
 
     <!-- CSS Dependencies -->
     <link rel="stylesheet" href="css/bootstrap.css">
@@ -31,12 +30,11 @@
                 <li><a class="dropdown-item" href="ProductionDashboard.html">Production Dashboard</a></li>
                 <li><a class="dropdown-item" href="LiveDashboard.html">Live Production Dashboard</a></li>
                 <li><a class="dropdown-item" href="ErrorsDashboard.html">Errors Dashboard</a></li>
-                <li><a class="dropdown-item" href="CompressorHMIDashboard.html">Compressor HMI Dashboard</a></li>
             </ul>
         </div>
         
         <!-- Header title of the current dashboard page -->
-        <h1 id="title">H2 Live Production Dashboard</h1>
+        <h1 id="title">Compressor HMI Dashboard</h1>
 
         <!-- Button group: includes Configuration Panel and Refresh buttons -->
         <div class="btn-group">
@@ -49,23 +47,11 @@
 
     <!-- Main container for displaying dashboard charts -->
     <div class="container-fluid" id="dashboardContainer">
-        <!-- Row to hold the first two graphs side by side -->
-        <div class="row">
-            <div class="col-md-6 p-1">
-                <!-- Production Rate graph -->
-                <iframe src="http://grafana.h2f/d-solo/live_data00000/live-data?orgId=1&theme=light&panelId=1&refresh=15s&from=now-15m&to=now"></iframe>
-            </div>
-            <div class="col-md-6 p-1">
-                <!-- Watt Consumption graph -->
-                <iframe src="http://grafana.h2f/d-solo/live_data00000/live-data?orgId=1&&theme=light&panelId=2&refresh=15s&from=now-15m&to=now"></iframe>
-            </div>
-        </div>
-
-        <!-- Row for the third graph, spanning the entire width -->
-        <div class="row">
-            <div class="col-12 p-1">
-                <!-- Production graph -->
-                <iframe src="http://grafana.h2f/d-solo/live_data00000/live-data?orgId=1&&theme=light&panelId=3&refresh=15s&from=now-15m&to=now"></iframe>
+        <!-- Row to hold the error graphs -->
+        <div style="height: 100%">
+            <div class="col-12 p-1" style="height: 100%">
+                <!-- Errors graph -->
+                <iframe src="http://grafana.h2f/d-solo/compressor0000/compressor-hmi?orgId=1&theme=light&panelId=1&refresh=15s"></iframe>
             </div>
         </div>
     </div>
