@@ -1,13 +1,49 @@
 [
   {
-    "name": "Start/Stop",
+    "name": "Start/Stop_h2f",
     "id": "DB1.DBX10.0",
     "type": "BOOL"
   },
   {
-    "name": "Restart",
+    "name": "Restart_h2f",
     "id": "DB1.DBX20.0",
     "type": "BOOL"
+  },
+  {
+    "name": "Start/Stop_compressor",
+    "id": "DB1.DBX11.0",
+    "type": "BOOL"
+  },
+  {
+    "name": "Restart_compressor",
+    "id": "DB1.DBX21.0",
+    "type": "BOOL"
+  },
+  {
+    "name": "Start/Stop_electro",
+    "id": "DB1.DBX12.0",
+    "type": "BOOL"
+  },
+  {
+    "name": "Restart_electro",
+    "id": "DB1.DBX22.0",
+    "type": "BOOL"
+  },
+  {
+    "name": "Status_compr",
+    "id": "DB1.DBX41.0"
+  },
+  {
+    "name": "Status_electro",
+    "id": "DB1.DBX42.0"
+  },
+  {
+    "name": "ProdValue_compr",
+    "id": "DB1.DBX51.0"
+  },
+  {
+    "name": "ProdValue_electro",
+    "id": "DB1.DBX52.0"
   },
   {
     "name": "Production_rate",
@@ -15,3 +51,6 @@
     "type": "FLOAT"
   }
 ]
+
+
+
