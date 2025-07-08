@@ -102,3 +102,35 @@ iframe {
 body.configuration-panel #configPanelButton {
   display: none; /* Hide the configuration panel button when on that page */
 }
+
+.status_view {
+  border: 1px solid black;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.sts_err{
+  border-color: var(--bs-danger);
+  background-color: var(--bs-danger);
+  color: var(--bs-gray-100);
+}
+.sts_idle{
+  border-color: var(--bs-success);
+  background-color: var(--bs-success);
+  color: var(--bs-gray-100);
+}
+.sts_other{
+  border-color: var(--bs-warning);
+  background-color: var(--bs-warning);
+  color: var(--bs-dark);
+}
+
+#switch-screen{
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5% 5%;
+}
+#switch-screen > button {
+  width: 25%;
+}
