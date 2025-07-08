@@ -156,7 +156,7 @@ async fn stop_compressor(state: &State<AppState>) -> Result<(), Custom<String>> 
     }
 }
 
-#[get("/electrolyser/prodRate?<rate>")]
+#[put("/electrolyser/prodRate?<rate>")]
 async fn prod_rate(rate: f32, state: &State<AppState>) -> Result<(), Custom<String>> {
     let res = send_command_write(&  state.logo.clone(),"Production_rate", &Value::Float32(rate)).await;
     match res {
@@ -272,15 +272,15 @@ fn rocket() -> _ {
         .mount("/compressor/start", routes![start_compressor])
         .mount("/compressor/stop", routes![stop_compressor])
         .mount("/compressor/restart", routes![restart_compressor])
-        .mount("/compressor/getState", routes![get_state_compressor])
-        .mount("/compressor/getProdValue", routes![get_prod_value_compressor])
+        .mount("/compressor/state", routes![get_state_compressor])
+        .mount("/compressor/prodValue", routes![get_prod_value_compressor])
 
         .mount("/electrolyser/start", routes![start_electrolyzer])
         .mount("/electrolyser/stop", routes![stop_electrolyzer])
         .mount("/electrolyser/restart", routes![restart_electrolyzer])
         .mount("/electrolyser/prodRate", routes![prod_rate])
-        .mount("/electrolyser/getState", routes![get_state_electrolyser])
-        .mount("/electrolyser/getProdValue", routes![get_prod_value_electrolyser])
+        .mount("/electrolyser/state", routes![get_state_electrolyser])
+        .mount("/electrolyser/prodValue", routes![get_prod_value_electrolyser])
 
         .manage(AppState {
                 logo: Arc::new(Mutex::new(logo_device)),
