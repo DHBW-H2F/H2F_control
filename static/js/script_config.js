@@ -35,7 +35,9 @@ document.addEventListener("DOMContentLoaded", function() {
     prodRate.addEventListener("change", async function () {
         const request = await fetch("/electrolyser/prodRate?" + new URLSearchParams({
             rate: prodRate.value,
-        }));
+        }),{
+            method: "PUT",
+        });
     });
     switchbuttons.forEach(btn=>{
         btn.addEventListener("click",(evt)=>{
