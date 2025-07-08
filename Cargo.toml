@@ -1,12 +1,12 @@
 [package]
 name = "h2f_control"
 version = "0.1.0"
-edition = "2021"
+edition = "2018"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-rocket = "0.5.1"
+rocket = { version = "=0.5.1"}
 modbus_device = { git = "https://github.com/lkzjdnb/modbus_device.git", version = "0.1.1" }
 s7_device = { git = "https://github.com/lkzjdnb/S7_devices.git", version = "0.1.1"}
 industrial_device = { git = "https://github.com/lkzjdnb/industrial_device.git", version = "0.1.1" }

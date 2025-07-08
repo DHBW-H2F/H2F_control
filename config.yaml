@@ -1,2 +1,10 @@
-controller_ip: "192.168.1.32:102"
-controller_registers: registers.json
+logo_ip: "192.168.1.32:102"
+logo_registers: registers.json
+
+#electrolyser_ip: "127.0.0.1:4502"
+#electrolyser_input_registers: "input_registers.json"
+#electrolyser_holding_registers: "holding_registers.json"
+#
+#
+#compressor_ip: "192.168.1.16:102"
+#compressor_registers: "S7_registers.json"
