@@ -257,8 +257,31 @@ fn rocket() -> _ {
 
     let app: AppConfig = config.try_deserialize().unwrap();
 
-    let regs_logo = get_regs_file(app.logo_registers);
-    let logo_device = create_s7_device(app.logo_ip, regs_logo);
+    //let regs_logo = get_regs_file(app.logo_registers);
+    //let logo_device = create_s7_device(app.logo_ip, regs_logo);
+    let regs_file: File = match File::open(&app.logo_registers) {
+        Ok(file) => file,
+        Err(err) => panic!(
+            "Could not open registers definition file : {err} ({0})",
+            app.logo_registers
+        ),
+    };
+
+    let logo_device = S7Device::new(
+        match app.logo_ip.parse() {
+            Ok(val) => val,
+            Err(err) => panic!(
+                "Could not parse controller adress : {err:?} ({0})",
+                app.logo_ip
+            ),
+        },
+        match s7_device::utils::get_defs_from_json(regs_file) {
+            Ok(regs) => regs,
+            Err(err) => {
+                panic!("There was an error reading registers definition from file : {err:?}")
+            }
+        },
+    );
 
     //let regs_compressor: File = get_regs_file(app.compressor_registers);
     //let compressor_device = create_s7_device(app.compressor_ip,regs_compressor);
