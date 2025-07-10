@@ -31,19 +31,23 @@
   },
   {
     "name": "Status_compr",
-    "id": "DB1.DBX41.0"
+    "id": "DB1.DBX41.0",
+    "type": "ENUM16"
   },
   {
     "name": "Status_electro",
-    "id": "DB1.DBX42.0"
+    "id": "DB1.DBX42.0",
+    "type": "ENUM16"
   },
   {
     "name": "ProdValue_compr",
-    "id": "DB1.DBX51.0"
+    "id": "DB1.DBX51.0",
+    "type": "FLOAT"
   },
   {
     "name": "ProdValue_electro",
-    "id": "DB1.DBX52.0"
+    "id": "DB1.DBX52.0",
+    "type": "FLOAT"
   },
   {
     "name": "Production_rate",
