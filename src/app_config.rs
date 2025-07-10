@@ -1,7 +1,4 @@
 use serde::Deserialize;
-use s7_device::S7Device;
-use rocket::futures::lock::Mutex;
-use std::sync::Arc;
 #[derive(Deserialize, Debug)]
 pub struct AppConfig {
     pub logo_ip: String,

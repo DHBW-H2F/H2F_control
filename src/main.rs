@@ -71,7 +71,7 @@ fn create_s7_device(app_ip : String,regs_file : File) -> S7Device{
         match s7_device::utils::get_defs_from_json(regs_file) {
             Ok(regs) => regs,
             Err(err) => {
-                panic!("There was an error reading registers definition from file : {err:?}")
+                panic!("There was an error reading registers definition from file : {err}")
             }
         },
     );
@@ -256,7 +256,8 @@ fn rocket() -> _ {
         .unwrap();
 
     let app: AppConfig = config.try_deserialize().unwrap();
-
+    println!("{:?}", app);
+    println!("{:?}", app.logo_registers);
     //let regs_logo = get_regs_file(app.logo_registers);
     //let logo_device = create_s7_device(app.logo_ip, regs_logo);
     let regs_file: File = match File::open(&app.logo_registers) {
@@ -266,7 +267,7 @@ fn rocket() -> _ {
             app.logo_registers
         ),
     };
-
+    println!("{:?}", regs_file);
     let logo_device = S7Device::new(
         match app.logo_ip.parse() {
             Ok(val) => val,
