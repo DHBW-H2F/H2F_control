@@ -279,7 +279,7 @@ fn rocket() -> _ {
         match s7_device::utils::get_defs_from_json(regs_file) {
             Ok(regs) => regs,
             Err(err) => {
-                panic!("There was an error reading registers definition from file : {err:?}")
+                panic!("There was an error reading registers definition from file : ({0})",err)
             }
         },
     );
