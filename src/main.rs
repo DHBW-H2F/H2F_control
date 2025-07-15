@@ -214,7 +214,7 @@ async fn get_state_electrolyser(state: &State<AppState>) -> status::Accepted<Str
             return rocket::response::status::Accepted("none".to_owned());
         },
     };
-    return status::Accepted(format!("value: '{}'", result));
+    return status::Accepted(format!("state: '{}'", result));
 }
 #[get("/prodValue")]
 async fn get_prod_value_electrolyser(state: &State<AppState>) -> status::Accepted<String> {
@@ -227,7 +227,7 @@ async fn get_prod_value_electrolyser(state: &State<AppState>) -> status::Accepte
             return rocket::response::status::Accepted("none".to_owned());
         },
     };
-    return status::Accepted(format!("state: '{}'", result));
+    return status::Accepted(format!("value: '{}'", result));
 }
 #[get("/prodValue")]
 async fn get_prod_value_compressor(state: &State<AppState>) -> status::Accepted<String> {
@@ -238,7 +238,7 @@ async fn get_prod_value_compressor(state: &State<AppState>) -> status::Accepted<
         Ok(value) => convert(value),
         Err(_) => "none".to_owned(),
     };
-    return status::Accepted(format!("state: '{}'", result));
+    return status::Accepted(format!("value: '{}'", result));
 }
 
 #[get("/")]

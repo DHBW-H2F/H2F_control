@@ -1,3 +1,32 @@
+function getCurrentStatus(element){
+    return element.classList[element.classList.find((ele)=>element.includes("sts_"))]
+}
+function setStatusValue(state,device,element){
+    if(device=="electrolyser"){
+        element.classList.remove(getCurrentStatus(element));
+        switch (state){
+            case 0 : 
+                element.classList.add("sts_idle");
+                element.innerHTML = "Internal Error, System not Initialized yet";
+            case 1 : 
+                element.classList.add("sts_running");
+                element.innerHTML = "System in Operation";
+            case 2 : 
+                element.classList.add("sts_err");
+                element.innerHTML = "Error";
+            case 3 : 
+                element.classList.add("sts_fatal_err");
+                element.innerHTML = "Fatal Error"; 
+            case 4 : 
+                element.classList.add("sts_err");
+                element.innerHTML = "System in Expert Mode"; 
+            break;
+        }
+    }
+}
+function setProdValue(ele,value){
+    ele.innerHTML = (value == 0 ? "--" : value);
+}
 document.addEventListener("DOMContentLoaded", function() {
     // start/stop action
     const startButtons = document.querySelectorAll('.startButton');
@@ -69,11 +98,15 @@ document.addEventListener("DOMContentLoaded", function() {
             let device = stat.id.split("_")[1];
             if(device!==undefined) device+="/";
             const response = await fetch("/"+device+"state");
+            const json = await response.json();
+            setStatusValue(json.state,device,stat);
         });
         prod_valuesEle.forEach(async (prod_value)=>{
             let device = prod_value.id.split("_")[1];
             if(device!==undefined) device+="/";
             const response = await fetch("/"+device+"prodValue");
+            const json = await response.json();
+            setProdValue(prod_value,json.value);
         });
     }
 

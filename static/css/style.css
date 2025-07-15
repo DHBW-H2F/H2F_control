@@ -111,6 +111,11 @@ body.configuration-panel #configPanelButton {
   justify-content: center;
 }
 .sts_err{
+  border-color: var(--bs-warning);
+  background-color: var(--bs-warning);
+  color: var(--bs-gray-100);
+}
+.sts_fatal_err{
   border-color: var(--bs-danger);
   background-color: var(--bs-danger);
   color: var(--bs-gray-100);
@@ -120,9 +125,9 @@ body.configuration-panel #configPanelButton {
   background-color: var(--bs-success);
   color: var(--bs-gray-100);
 }
-.sts_other{
-  border-color: var(--bs-warning);
-  background-color: var(--bs-warning);
+.sts_running{
+  border-color: var(--bs-info);
+  background-color: var(--bs-info);
   color: var(--bs-dark);
 }
 
