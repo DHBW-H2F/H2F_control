@@ -5,27 +5,27 @@ function setStatusValue(state,device,element){
     if(device=="electrolyser"){
         element.classList.remove(getCurrentStatus(element));
         switch (state){
-            case 0 : 
+            case "0" : 
                 element.classList.add("sts_idle");
-                element.innerText = "Internal Error, System not Initialized yet";
-            case 1 : 
+                element.innerHTML = "Internal Error, System not Initialized yet";
+            case "1" : 
                 element.classList.add("sts_running");
-                element.innerText = "System in Operation";
-            case 2 : 
+                element.innerHTML = "System in Operation";
+            case "2" : 
                 element.classList.add("sts_err");
-                element.innerText = "Error";
-            case 3 : 
+                element.innerHTML = "Error";
+            case "3" : 
                 element.classList.add("sts_fatal_err");
-                element.innerText = "Fatal Error"; 
-            case 4 : 
+                element.innerHTML = "Fatal Error"; 
+            case "4" : 
                 element.classList.add("sts_err");
-                element.innerText = "System in Expert Mode"; 
+                element.innerHTML = "System in Expert Mode"; 
             break;
         }
     }
 }
 function setProdValue(ele,value){
-    ele.innerText = (value == 0 ? "--" : value);
+    ele.innerHTML = (value == 0 ? "--" : value);
 }
 document.addEventListener("DOMContentLoaded", function() {
     // start/stop action
@@ -86,14 +86,9 @@ document.addEventListener("DOMContentLoaded", function() {
     var slider = document.getElementById('slider');
     slider.addEventListener('input', function() {
         updateValue(this.value);
-    });
-
-    function getRandomValue(){
-        let a = Math.random()*100;
-        return (a)-(a%1);
-    }
+    }); 
     
-    function updateProdValue(){
+    async function updateProdValue(){
          try {
             
             statusEle.forEach(async (stat)=>{
@@ -109,8 +104,9 @@ document.addEventListener("DOMContentLoaded", function() {
                 if(device!==undefined) device+="/";
                 const response = await fetch("/"+device+"prodValue");
                 const json = await response.json();
-                console.log(json);
-                setProdValue(parseFloat(prod_value),json.value);
+                let epsilon = 1e-5;
+                const value = json.value < epsilon ? 0 : value;
+                setProdValue(prod_value,value);
             });
         } catch (error) {
             console.error(error.message);
