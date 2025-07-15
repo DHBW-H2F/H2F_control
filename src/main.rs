@@ -109,7 +109,7 @@ async fn start_project(state: &State<AppState>) -> Result<(), Custom<String>> {
         Err(err) => Err(Custom(Status::InternalServerError, format!("{err:?}"))),
     }
 }
-#[get("/electrolyzer/start")]
+#[get("/start")]
 async fn start_electrolyzer(state: &State<AppState>) -> Result<(), Custom<String>> {
     let res = send_command_write(&state.logo.clone(), "Start/Stop_electro", &Value::Boolean(true)).await;
     match res {
@@ -118,7 +118,7 @@ async fn start_electrolyzer(state: &State<AppState>) -> Result<(), Custom<String
     }
 
 }
-#[get("/compressor/start")]
+#[get("/start")]
 async fn start_compressor(state: &State<AppState>) -> Result<(), Custom<String>> {
     let res = send_command_write(&state.logo.clone(), "Start/Stop_compressor", &Value::Boolean(true)).await;
     match res {
@@ -138,7 +138,7 @@ async fn stop_project(state: &State<AppState>) -> Result<(), Custom<String>> {
         Err(err) => Err(Custom(Status::InternalServerError, format!("{err:?}"))),
     }
 }
-#[get("/electrolyzer/stop")]
+#[get("/stop")]
 async fn stop_electrolyzer(state: &State<AppState>) -> Result<(), Custom<String>> {
     let res = send_command_write(&state.logo.clone(), "Start/Stop_electro", &Value::Boolean(false)).await;
     match res {
@@ -147,7 +147,7 @@ async fn stop_electrolyzer(state: &State<AppState>) -> Result<(), Custom<String>
     }
 
 }
-#[get("/compressor/stop")]
+#[get("/stop")]
 async fn stop_compressor(state: &State<AppState>) -> Result<(), Custom<String>> {
     let res = send_command_write(&state.logo.clone(), "Start/Stop_compressor", &Value::Boolean(false)).await;
     match res {
@@ -156,7 +156,7 @@ async fn stop_compressor(state: &State<AppState>) -> Result<(), Custom<String>> 
     }
 }
 
-#[put("/electrolyser/prodRate?<rate>")]
+#[put("/prodRate?<rate>")]
 async fn prod_rate(rate: f32, state: &State<AppState>) -> Result<(), Custom<String>> {
     let res = send_command_write(&  state.logo.clone(),"Production_rate", &Value::Float32(rate)).await;
     match res {
@@ -175,7 +175,7 @@ async fn restart_project(state: &State<AppState>) -> Result<(), Custom<String>> 
         Err(err) => Err(Custom(Status::InternalServerError, format!("{err:?}"))),
     }
 }
-#[get("/electrolyzer/restart")]
+#[get("/restart")]
 async fn restart_electrolyzer(state: &State<AppState>) -> Result<(), Custom<String>> {
     send_command_write(&state.logo.clone(),"Restart_electro", &Value::Boolean(true)).await;
     let res = send_command_write(&state.logo.clone(),"Restart_electro", &Value::Boolean(false)).await;
@@ -185,7 +185,7 @@ async fn restart_electrolyzer(state: &State<AppState>) -> Result<(), Custom<Stri
     }
 
 }
-#[get("/compressor/restart")]
+#[get("/restart")]
 async fn restart_compressor(state: &State<AppState>) -> Result<(), Custom<String>> {
     send_command_write(&state.logo.clone(),"Restart_compressor", &Value::Boolean(true)).await;
     let res=send_command_write(&state.logo.clone(),"Restart_compressor", &Value::Boolean(false)).await;
@@ -194,7 +194,7 @@ async fn restart_compressor(state: &State<AppState>) -> Result<(), Custom<String
         Err(err) => Err(Custom(Status::InternalServerError, format!("{err:?}"))),
     }
 }
-#[get("/compressor/state")]
+#[get("/state")]
 async fn get_state_compressor(state: &State<AppState>) -> status::Accepted<String> {
     let res = send_command_read(&state.logo.clone(), "status_compr").await;
     let result = match res {
@@ -203,7 +203,7 @@ async fn get_state_compressor(state: &State<AppState>) -> status::Accepted<Strin
     };
     return status::Accepted(format!("state: '{}'", result));
 }
-#[get("/electrolyser/state")]
+#[get("/state")]
 async fn get_state_electrolyser(state: &State<AppState>) -> status::Accepted<String> {
     println!("state electrolyser");
     let res = send_command_read(&state.logo.clone(),"status_electro").await;
@@ -213,7 +213,7 @@ async fn get_state_electrolyser(state: &State<AppState>) -> status::Accepted<Str
     };
     return status::Accepted(format!("state: '{}'", result));
 }
-#[get("/electrolyser/prodValue")]
+#[get("/prodValue")]
 async fn get_prod_value_electrolyser(state: &State<AppState>) -> status::Accepted<String> {
     let res = send_command_read(&state.logo.clone(),"prodValue_electro").await;
     let result = match res {
@@ -222,7 +222,7 @@ async fn get_prod_value_electrolyser(state: &State<AppState>) -> status::Accepte
     };
     return status::Accepted(format!("state: '{}'", result));
 }
-#[get("/compressor/prodValue")]
+#[get("/prodValue")]
 async fn get_prod_value_compressor(state: &State<AppState>) -> status::Accepted<String> {
     println!("prodValue compressor");
     let res = send_command_read(&state.logo.clone(),"prodValue_compr").await;
@@ -293,18 +293,18 @@ fn rocket() -> _ {
         .mount("/stop", routes![stop_project])
         .mount("/restart", routes![restart_project])
 
-        .mount("/compressor/start", routes![start_compressor])
-        .mount("/compressor/stop", routes![stop_compressor])
-        .mount("/compressor/restart", routes![restart_compressor])
-        .mount("/compressor/state", routes![get_state_compressor])
-        .mount("/compressor/prodValue", routes![get_prod_value_compressor])
+        .mount("/compressor", routes![start_compressor])
+        .mount("/compressor", routes![stop_compressor])
+        .mount("/compressor", routes![restart_compressor])
+        .mount("/compressor", routes![get_state_compressor])
+        .mount("/compressor", routes![get_prod_value_compressor])
 
-        .mount("/electrolyser/start", routes![start_electrolyzer])
-        .mount("/electrolyser/stop", routes![stop_electrolyzer])
-        .mount("/electrolyser/restart", routes![restart_electrolyzer])
-        .mount("/electrolyser/prodRate", routes![prod_rate])
-        .mount("/electrolyser/state", routes![get_state_electrolyser])
-        .mount("/electrolyser/prodValue", routes![get_prod_value_electrolyser])
+        .mount("/electrolyser", routes![start_electrolyzer])
+        .mount("/electrolyser", routes![stop_electrolyzer])
+        .mount("/electrolyser", routes![restart_electrolyzer])
+        .mount("/electrolyser", routes![prod_rate])
+        .mount("/electrolyser", routes![get_state_electrolyser])
+        .mount("/electrolyser", routes![get_prod_value_electrolyser])
 
         .manage(AppState {
                 logo: Arc::new(Mutex::new(logo_device)),
