@@ -205,6 +205,7 @@ async fn get_state_compressor(state: &State<AppState>) -> status::Accepted<Strin
 }
 #[get("/electrolyser/state")]
 async fn get_state_electrolyser(state: &State<AppState>) -> status::Accepted<String> {
+    !println("state electrolyser");
     let res = send_command_read(&state.logo.clone(),"status_electro").await;
     let result = match res {
         Ok(value) => convert(value),
@@ -213,7 +214,7 @@ async fn get_state_electrolyser(state: &State<AppState>) -> status::Accepted<Str
     return status::Accepted(format!("state: '{}'", result));
 }
 #[get("/electrolyser/prodValue")]
-async fn get_prod_value_compressor(state: &State<AppState>) -> status::Accepted<String> {
+async fn get_prod_value_electrolyser(state: &State<AppState>) -> status::Accepted<String> {
     let res = send_command_read(&state.logo.clone(),"prodValue_electro").await;
     let result = match res {
         Ok(value) => convert(value),
@@ -222,7 +223,8 @@ async fn get_prod_value_compressor(state: &State<AppState>) -> status::Accepted<
     return status::Accepted(format!("state: '{}'", result));
 }
 #[get("/compressor/prodValue")]
-async fn get_prod_value_electrolyser(state: &State<AppState>) -> status::Accepted<String> {
+async fn get_prod_value_compressor(state: &State<AppState>) -> status::Accepted<String> {
+    !println("prodValue compressor");
     let res = send_command_read(&state.logo.clone(),"prodValue_compr").await;
     let result = match res {
         Ok(value) => convert(value),
@@ -256,8 +258,6 @@ fn rocket() -> _ {
         .unwrap();
 
     let app: AppConfig = config.try_deserialize().unwrap();
-    println!("{:?}", app);
-    println!("{:?}", app.logo_registers);
     //let regs_logo = get_regs_file(app.logo_registers);
     //let logo_device = create_s7_device(app.logo_ip, regs_logo);
     let regs_file: File = match File::open(&app.logo_registers) {
