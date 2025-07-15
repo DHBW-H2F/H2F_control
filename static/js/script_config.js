@@ -7,25 +7,25 @@ function setStatusValue(state,device,element){
         switch (state){
             case 0 : 
                 element.classList.add("sts_idle");
-                element.innerHTML = "Internal Error, System not Initialized yet";
+                element.innerText = "Internal Error, System not Initialized yet";
             case 1 : 
                 element.classList.add("sts_running");
-                element.innerHTML = "System in Operation";
+                element.innerText = "System in Operation";
             case 2 : 
                 element.classList.add("sts_err");
-                element.innerHTML = "Error";
+                element.innerText = "Error";
             case 3 : 
                 element.classList.add("sts_fatal_err");
-                element.innerHTML = "Fatal Error"; 
+                element.innerText = "Fatal Error"; 
             case 4 : 
                 element.classList.add("sts_err");
-                element.innerHTML = "System in Expert Mode"; 
+                element.innerText = "System in Expert Mode"; 
             break;
         }
     }
 }
 function setProdValue(ele,value){
-    ele.innerHTML = (value == 0 ? "--" : value);
+    ele.innerText = (value == 0 ? "--" : value);
 }
 document.addEventListener("DOMContentLoaded", function() {
     // start/stop action
@@ -101,6 +101,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 if(device!==undefined) device+="/";
                 const response = await fetch("/"+device+"state");
                 const json = await response.json();
+                console.log(json);
                 setStatusValue(json.state,device,stat);
             });
             prod_valuesEle.forEach(async (prod_value)=>{
@@ -108,7 +109,8 @@ document.addEventListener("DOMContentLoaded", function() {
                 if(device!==undefined) device+="/";
                 const response = await fetch("/"+device+"prodValue");
                 const json = await response.json();
-                setProdValue(prod_value,json.value);
+                console.log(json);
+                setProdValue(parseFloat(prod_value),json.value);
             });
         } catch (error) {
             console.error(error.message);
