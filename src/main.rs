@@ -205,7 +205,7 @@ async fn get_state_compressor(state: &State<AppState>) -> status::Accepted<Strin
 }
 #[get("/electrolyser/state")]
 async fn get_state_electrolyser(state: &State<AppState>) -> status::Accepted<String> {
-    !println("state electrolyser");
+    println!("state electrolyser");
     let res = send_command_read(&state.logo.clone(),"status_electro").await;
     let result = match res {
         Ok(value) => convert(value),
@@ -224,7 +224,7 @@ async fn get_prod_value_electrolyser(state: &State<AppState>) -> status::Accepte
 }
 #[get("/compressor/prodValue")]
 async fn get_prod_value_compressor(state: &State<AppState>) -> status::Accepted<String> {
-    !println("prodValue compressor");
+    println!("prodValue compressor");
     let res = send_command_read(&state.logo.clone(),"prodValue_compr").await;
     let result = match res {
         Ok(value) => convert(value),
