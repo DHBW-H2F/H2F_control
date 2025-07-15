@@ -94,20 +94,25 @@ document.addEventListener("DOMContentLoaded", function() {
     }
     
     function updateProdValue(){
-        statusEle.forEach(async (stat)=>{
-            let device = stat.id.split("_")[1];
-            if(device!==undefined) device+="/";
-            const response = await fetch("/"+device+"state");
-            const json = await response.json();
-            setStatusValue(json.state,device,stat);
-        });
-        prod_valuesEle.forEach(async (prod_value)=>{
-            let device = prod_value.id.split("_")[1];
-            if(device!==undefined) device+="/";
-            const response = await fetch("/"+device+"prodValue");
-            const json = await response.json();
-            setProdValue(prod_value,json.value);
-        });
+         try {
+            
+            statusEle.forEach(async (stat)=>{
+                let device = stat.id.split("_")[1];
+                if(device!==undefined) device+="/";
+                const response = await fetch("/"+device+"state");
+                const json = await response.json();
+                setStatusValue(json.state,device,stat);
+            });
+            prod_valuesEle.forEach(async (prod_value)=>{
+                let device = prod_value.id.split("_")[1];
+                if(device!==undefined) device+="/";
+                const response = await fetch("/"+device+"prodValue");
+                const json = await response.json();
+                setProdValue(prod_value,json.value);
+            });
+        } catch (error) {
+            console.error(error.message);
+        }
     }
 
     async function  updateStateAndValue(){
