@@ -196,7 +196,7 @@ async fn restart_compressor(state: &State<AppState>) -> Result<(), Custom<String
 }
 #[get("/state")]
 async fn get_state_compressor(state: &State<AppState>) -> status::Accepted<String> {
-    let res = send_command_read(&state.logo.clone(), "status_compr").await;
+    let res = send_command_read(&state.logo.clone(), "Status_compr").await;
     let result = match res {
         Ok(value) => convert(value),
         Err(_) => "none".to_owned(),
@@ -206,7 +206,7 @@ async fn get_state_compressor(state: &State<AppState>) -> status::Accepted<Strin
 #[get("/state")]
 async fn get_state_electrolyser(state: &State<AppState>) -> status::Accepted<String> {
     println!("state electrolyser");
-    let res = send_command_read(&state.logo.clone(),"status_electro").await;
+    let res = send_command_read(&state.logo.clone(),"Status_electro").await;
     let result = match res {
         Ok(value) => convert(value),
         Err(err) => {
@@ -218,7 +218,7 @@ async fn get_state_electrolyser(state: &State<AppState>) -> status::Accepted<Str
 }
 #[get("/prodValue")]
 async fn get_prod_value_electrolyser(state: &State<AppState>) -> status::Accepted<String> {
-    let res = send_command_read(&state.logo.clone(),"prodValue_electro").await;
+    let res = send_command_read(&state.logo.clone(),"ProdValue_electro").await;
 
     let result = match res {
         Ok(value) => convert(value),
@@ -232,7 +232,7 @@ async fn get_prod_value_electrolyser(state: &State<AppState>) -> status::Accepte
 #[get("/prodValue")]
 async fn get_prod_value_compressor(state: &State<AppState>) -> status::Accepted<String> {
     println!("prodValue compressor");
-    let res = send_command_read(&state.logo.clone(),"prodValue_compr").await;
+    let res = send_command_read(&state.logo.clone(),"ProdValue_compr").await;
     
     let result = match res {
         Ok(value) => convert(value),
