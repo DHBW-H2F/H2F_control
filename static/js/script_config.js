@@ -1,5 +1,5 @@
 function getCurrentStatus(element){
-    return element.classList[element.classList.find((ele)=>element.includes("sts_"))]
+    return element.classList[element.classList.find((ele)=>ele.includes("sts_"))]
 }
 function setStatusValue(state,device,element){
     if(device=="electrolyser"){
