@@ -1,9 +1,13 @@
 function getCurrentStatus(element){
     return element.classList[element.classList.find((ele)=>ele.includes("sts_"))]
 }
-function setStatusValue(state,device,element){
+function setStatusValue(element,device,state){
+    console.log(element);
+    console.log(state);
+    console.log(device);
     if(device=="electrolyser"){
         element.classList.remove(getCurrentStatus(element));
+        console.log(element.classList);
         switch (state){
             case "0" : 
                 element.classList.add("sts_idle");
@@ -96,7 +100,6 @@ document.addEventListener("DOMContentLoaded", function() {
                 if(device!==undefined) device+="/";
                 const response = await fetch("/"+device+"state");
                 const json = await response.json();
-                console.log(json);
                 setStatusValue(json.state,device,stat);
             });
             prod_valuesEle.forEach(async (prod_value)=>{
