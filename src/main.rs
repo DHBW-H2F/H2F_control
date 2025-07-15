@@ -95,7 +95,7 @@ struct CompressorState {
 
 fn convert(valeur : Value) -> String{
     match valeur {
-        Value::Enum16(val)=>val.to_string(),
+        Value::S16(val)=>val.to_string(),
         Value::Float32(val)=>val.to_string(),
         _ => "bad type".to_owned(),
     }
