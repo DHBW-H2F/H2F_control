@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const stopButtons = document.querySelectorAll('.stopButton');
     const restartButtons = document.querySelectorAll('.restartButton');
     const statusEle = document.querySelectorAll(".sys_status");
-    const prod_valuesEle= document.querySelectorAll(".sys_prod_value");
+    const prod_valuesEle= document.querySelectorAll(".sys_prod_value span");
     const switchbuttons = document.getElementById("switch-screen").querySelectorAll("button");
     const screens=document.getElementById("main-container").querySelectorAll(".sys_screen");
 
@@ -71,7 +71,7 @@ document.addEventListener("DOMContentLoaded", function() {
             const response = await fetch("/"+device+"getState");
         });
         prod_valuesEle.forEach(async (prod_value)=>{
-            let device = stat.id.split("_")[1];
+            let device = prod_value.id.split("_")[1];
             if(device!==undefined) device+="/";
             const response = await fetch("/"+device+"getProdValue");
         });
