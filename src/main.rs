@@ -209,16 +209,23 @@ async fn get_state_electrolyser(state: &State<AppState>) -> status::Accepted<Str
     let res = send_command_read(&state.logo.clone(),"status_electro").await;
     let result = match res {
         Ok(value) => convert(value),
-        Err(_) => "none".to_owned(),
+        Err(err) => {
+            println!("{}",err);
+            return rocket::response::status::Accepted("none".to_owned());
+        },
     };
-    return status::Accepted(format!("state: '{}'", result));
+    return status::Accepted(format!("value: '{}'", result));
 }
 #[get("/prodValue")]
 async fn get_prod_value_electrolyser(state: &State<AppState>) -> status::Accepted<String> {
     let res = send_command_read(&state.logo.clone(),"prodValue_electro").await;
+
     let result = match res {
         Ok(value) => convert(value),
-        Err(_) => "none".to_owned(),
+        Err(err) => {
+            println!("{}",err);
+            return rocket::response::status::Accepted("none".to_owned());
+        },
     };
     return status::Accepted(format!("state: '{}'", result));
 }
@@ -226,6 +233,7 @@ async fn get_prod_value_electrolyser(state: &State<AppState>) -> status::Accepte
 async fn get_prod_value_compressor(state: &State<AppState>) -> status::Accepted<String> {
     println!("prodValue compressor");
     let res = send_command_read(&state.logo.clone(),"prodValue_compr").await;
+    
     let result = match res {
         Ok(value) => convert(value),
         Err(_) => "none".to_owned(),
