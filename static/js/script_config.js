@@ -68,12 +68,12 @@ document.addEventListener("DOMContentLoaded", function() {
         statusEle.forEach(async (stat)=>{
             let device = stat.id.split("_")[1];
             if(device!==undefined) device+="/";
-            const response = await fetch("/"+device+"getState");
+            const response = await fetch("/"+device+"state");
         });
         prod_valuesEle.forEach(async (prod_value)=>{
             let device = prod_value.id.split("_")[1];
             if(device!==undefined) device+="/";
-            const response = await fetch("/"+device+"getProdValue");
+            const response = await fetch("/"+device+"prodValue");
         });
     }
 
