@@ -130,6 +130,11 @@ body.configuration-panel #configPanelButton {
   background-color: var(--bs-info);
   color: var(--bs-dark);
 }
+.sts_cant_connect{
+  border-color: var(--bs-secondary);
+  background-color: var(--bs-secondary);
+  color: var(--bs-gray-100);
+}
 
 #switch-screen{
   display: flex;

@@ -1,26 +1,30 @@
 function getCurrentStatus(element){
-    return element.classList[element.classList.find((ele)=>ele.includes("sts_"))]
+    let listClass = Array.from(element.classList)
+    return element.classList[listClass.find((ele)=>ele.includes("sts_"))]
 }
 function setStatusValue(element,device,state){
     if(device=="electrolyser"){
         element.classList.remove(getCurrentStatus(element));
-        console.log(element.classList);
+        state = parseInt(state)
         switch (state){
-            case "0" : 
+            case 0 : 
                 element.classList.add("sts_idle");
                 element.innerHTML = "Internal Error, System not Initialized yet";
-            case "1" : 
+            case 1 : 
                 element.classList.add("sts_running");
                 element.innerHTML = "System in Operation";
-            case "2" : 
+            case 2 : 
                 element.classList.add("sts_err");
                 element.innerHTML = "Error";
-            case "3" : 
+            case 3 : 
                 element.classList.add("sts_fatal_err");
                 element.innerHTML = "Fatal Error"; 
-            case "4" : 
+            case 4 : 
                 element.classList.add("sts_err");
-                element.innerHTML = "System in Expert Mode"; 
+                element.innerHTML = "System in Expert Mode";
+            case 5 : 
+                element.classList.add("sts_cant_connect");
+                element.innerHTML = "offline";
             break;
         }
     }
@@ -90,27 +94,32 @@ document.addEventListener("DOMContentLoaded", function() {
     }); 
     
     async function updateProdValue(){
-         try {
-            
             statusEle.forEach(async (stat)=>{
                 let device = stat.id.split("_")[1];
-                if(device!==undefined) device+="/";
-                const response = await fetch("/"+device+"state");
-                const json = await response.json();
-                setStatusValue(json.state,device.slice(0,-1),stat);
+                const deviceURL = device!==undefined ? device+"/" : device;
+                try {
+                    const response = await fetch("/"+deviceURL+"state");
+                    const json = await response.json();
+                    setStatusValue(stat,device.slice(0,-1),parseInt(json.state));
+                } catch (error) {
+                    console.error(error.message);
+                    setStatusValue(stat,device,5);
+                }
             });
             prod_valuesEle.forEach(async (prod_value)=>{
                 let device = prod_value.id.split("_")[1];
-                if(device!==undefined) device+="/";
-                const response = await fetch("/"+device+"prodValue");
-                const json = await response.json();
-                let epsilon = 1e-5;
-                const value = json.value < epsilon ? 0 : value;
-                setProdValue(prod_value,value);
+                const deviceURL = device!==undefined ? device+"/" : device;
+                try {
+                    const response = await fetch("/"+deviceURL+"prodValue");
+                    const json = await response.json();
+                    const value = json.value < 1e-5 ? 0 : json.value;
+                    setProdValue(prod_value,value);
+                } catch (error) {
+                    console.error(error.message);
+                    setProdValue(prod_value,0);
+                }
             });
-        } catch (error) {
-            console.error(error.message);
-        }
+        
     }
 
     async function  updateStateAndValue(){
