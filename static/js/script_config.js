@@ -3,6 +3,8 @@ function getCurrentStatus(element){
     return element.classList[listClass.find((ele)=>ele.includes("sts_"))]
 }
 function setStatusValue(element,device,state){
+    console.log(device);
+    console.log(state)
     if(device=="electrolyser"){
         element.classList.remove(getCurrentStatus(element));
         state = parseInt(state)
@@ -100,7 +102,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 try {
                     const response = await fetch("/"+deviceURL+"state");
                     const json = await response.json();
-                    setStatusValue(stat,device.slice(0,-1),parseInt(json.state));
+                    setStatusValue(stat,device,parseInt(json.state));
                 } catch (error) {
                     console.error(error.message);
                     setStatusValue(stat,device,5);
