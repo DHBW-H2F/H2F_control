@@ -5,9 +5,9 @@ function getCurrentStatus(element){
 function setStatusValue(element,device,state){
     console.log(device);
     console.log(state)
+    element.classList.remove(getCurrentStatus(element));
+    state = parseInt(state)
     if(device=="electrolyser"){
-        element.classList.remove(getCurrentStatus(element));
-        state = parseInt(state)
         switch (state){
             case 0 : 
                 element.classList.add("sts_idle");
@@ -25,6 +25,13 @@ function setStatusValue(element,device,state){
                 element.classList.add("sts_err");
                 element.innerHTML = "System in Expert Mode";
             case 5 : 
+                element.classList.add("sts_cant_connect");
+                element.innerHTML = "offline";
+            break;
+        }
+    }else if (device == "compressor"){
+        switch (state){
+            case 5 :
                 element.classList.add("sts_cant_connect");
                 element.innerHTML = "offline";
             break;

@@ -8,6 +8,7 @@ use clap::Parser;
 mod control;
 use control::send_command_read;
 use control::send_command_write;
+use rocket::figment::value;
 use core::panic;
 
 use industrial_device::types::Value;
@@ -211,6 +212,7 @@ async fn get_state_electrolyser(state: &State<AppState>) -> status::Accepted<Str
         Ok(value) => convert(value),
         Err(err) => "none".to_owned(),
     };
+    println!("valeur : {}",result);
     return status::Accepted(format!("{{\"state\": \"{}\"}}", result));
 }
 #[get("/prodValue")]
@@ -221,6 +223,7 @@ async fn get_prod_value_electrolyser(state: &State<AppState>) -> status::Accepte
         Ok(value) => convert(value),
         Err(err) => "none".to_owned(),
     };
+    println!("valeur : {}",result);
     return status::Accepted(format!("{{\"value\": \"{}\"}}", result));
 }
 #[get("/prodValue")]
