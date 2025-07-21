@@ -24,14 +24,17 @@ function setStatusValue(element,device,state){
             case 4 : 
                 element.classList.add("sts_err");
                 element.innerHTML = "System in Expert Mode";
-            case 5 : 
+            case _ : 
                 element.classList.add("sts_cant_connect");
                 element.innerHTML = "offline";
             break;
         }
     }else if (device == "compressor"){
         switch (state){
-            case 5 :
+            case 1 :
+                element.classList.add("sts_running");
+                element.innerHTML = "Pre-heating";
+            case _ :
                 element.classList.add("sts_cant_connect");
                 element.innerHTML = "offline";
             break;
