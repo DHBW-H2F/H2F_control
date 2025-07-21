@@ -31,9 +31,18 @@ function setStatusValue(element,device,state){
         }
     }else if (device == "compressor"){
         switch (state){
+            case 0 :
+                element.classList.add("sts_fatal_err");
+                element.innerHTML = "Stopped";
             case 1 :
                 element.classList.add("sts_running");
                 element.innerHTML = "Pre-heating";
+            case 2 :
+                element.classList.add("sts_idle");
+                element.innerHTML = "Start Up";
+            case 3 :
+                element.classList.add("sts_running");
+                element.innerHTML = "In Operation";
             case _ :
                 element.classList.add("sts_cant_connect");
                 element.innerHTML = "offline";
