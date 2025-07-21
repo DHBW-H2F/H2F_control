@@ -24,7 +24,7 @@ function setStatusValue(element,device,state){
             case 4 : 
                 element.classList.add("sts_err");
                 element.innerHTML = "System in Expert Mode";
-            case _ : 
+            default :
                 element.classList.add("sts_cant_connect");
                 element.innerHTML = "offline";
             break;
@@ -43,7 +43,7 @@ function setStatusValue(element,device,state){
             case 3 :
                 element.classList.add("sts_running");
                 element.innerHTML = "In Operation";
-            case _ :
+            default :
                 element.classList.add("sts_cant_connect");
                 element.innerHTML = "offline";
             break;
