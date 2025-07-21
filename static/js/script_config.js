@@ -4,49 +4,58 @@ function getCurrentStatus(element){
 }
 function setStatusValue(element,device,state){
     console.log(device);
-    console.log(state)
+    console.log(state);
     element.classList.remove(getCurrentStatus(element));
-    state = parseInt(state)
     if(device=="electrolyser"){
         switch (state){
             case 0 : 
                 element.classList.add("sts_idle");
                 element.innerHTML = "Internal Error, System not Initialized yet";
+                break;
             case 1 : 
                 element.classList.add("sts_running");
                 element.innerHTML = "System in Operation";
+                break;
             case 2 : 
                 element.classList.add("sts_err");
                 element.innerHTML = "Error";
+                break;
             case 3 : 
                 element.classList.add("sts_fatal_err");
-                element.innerHTML = "Fatal Error"; 
+                element.innerHTML = "Fatal Error";
+                break;
             case 4 : 
                 element.classList.add("sts_err");
                 element.innerHTML = "System in Expert Mode";
+                break;
             default :
                 element.classList.add("sts_cant_connect");
                 element.innerHTML = "offline";
-            break;
+                break;
         }
     }else if (device == "compressor"){
+        console.log("bien dans le compresseur")
         switch (state){
             case 0 :
                 element.classList.add("sts_fatal_err");
                 element.innerHTML = "Stopped";
+                break;
             case 1 :
                 element.classList.add("sts_running");
                 element.innerHTML = "Pre-heating";
+                break;
             case 2 :
                 element.classList.add("sts_idle");
                 element.innerHTML = "Start Up";
+                break;
             case 3 :
                 element.classList.add("sts_running");
                 element.innerHTML = "In Operation";
+                break;
             default :
                 element.classList.add("sts_cant_connect");
                 element.innerHTML = "offline";
-            break;
+                break;
         }
     }
 }
@@ -124,7 +133,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     setStatusValue(stat,device,parseInt(json.state));
                 } catch (error) {
                     console.error(error.message);
-                    setStatusValue(stat,device,5);
+                    setStatusValue(stat,device,-1);
                 }
             });
             prod_valuesEle.forEach(async (prod_value)=>{
