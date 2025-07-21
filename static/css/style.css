@@ -109,6 +109,7 @@ body.configuration-panel #configPanelButton {
   display: flex;
   align-items: center;
   justify-content: center;
+  min-width: fit-content;
 }
 .sts_err{
   border-color: var(--bs-warning);
