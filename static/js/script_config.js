@@ -142,7 +142,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 try {
                     const response = await fetch("/"+deviceURL+"prodValue");
                     const json = await response.json();
-                    const value = json.value < 1e-5 ? 0 : json.value;
+                    const value = json.value < 1e-5 || isNaN(json.value) ? 0  : json.value;
                     setProdValue(prod_value,value);
                 } catch (error) {
                     console.error(error.message);
