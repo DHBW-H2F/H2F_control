@@ -5,6 +5,7 @@ function getCurrentStatus(element){
 function setStatusValue(element,device,state){
     console.log(device);
     console.log(state);
+    state = isNaN(state) ? -1 : state;
     element.classList.remove(getCurrentStatus(element));
     if(device=="electrolyser"){
         switch (state){
@@ -34,18 +35,17 @@ function setStatusValue(element,device,state){
                 break;
         }
     }else if (device == "compressor"){
-        console.log("bien dans le compresseur")
         switch (state){
             case 0 :
                 element.classList.add("sts_fatal_err");
                 element.innerHTML = "Stopped";
                 break;
             case 1 :
-                element.classList.add("sts_running");
+                element.classList.add("sts_idle");
                 element.innerHTML = "Pre-heating";
                 break;
             case 2 :
-                element.classList.add("sts_idle");
+                element.classList.add("sts_running");
                 element.innerHTML = "Start Up";
                 break;
             case 3 :
