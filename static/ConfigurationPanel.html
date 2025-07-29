@@ -94,12 +94,12 @@
             <!-- Right Column for selecting a production value -->
             <div class="col-md-6">
                 <div class="row my-5">
-                    <div class="col-7 h4 text-center">Status of the Electrolyser</div>
+                    <div class="col-5 h4 text-center">Status of the Electrolyser</div>
                     <div class="col-2 status_view sts_idle sys_status" id="status_electrolyser">Idle</div>
                 </div>
                 <div class="row my-5">  
-                    <div class="col-7 h4 text-center">Value</div>
-                    <div class="col-2 status_view sys_prod_value"><span id="prod_electrolyser">5</span>&nbspbars</div>
+                    <div class="col-5 h4 text-center">Value</div>
+                    <div class="col-2 status_view sys_prod_value"><span id="prod_electrolyser" value="0">--</span>&nbspbars</div>
                 </div>
                 <!-- Embedded Grafana iframe displaying real-time data -->
                 <iframe src="http://grafana.h2f/d-solo/live_data00000/live-data?orgId=1&theme=light&panelId=1&refresh=1s"></iframe>
@@ -125,7 +125,7 @@
                 </div>
                 <div class="row my-5">  
                     <div class="col-7 h4 text-center">Value</div>
-                    <div class="col-2 status_view sys_prod_value"><span id="prod_compressor">5</span>&nbspbars</div>
+                    <div class="col-2 status_view sys_prod_value"><span id="prod_compressor" value="0">5</span>&nbspbars</div>
                 </div>
             </div>
         </div>

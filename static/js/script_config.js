@@ -3,8 +3,6 @@ function getCurrentStatus(element){
     return element.classList[listClass.find((ele)=>ele.includes("sts_"))]
 }
 function setStatusValue(element,device,state){
-    console.log(device);
-    console.log(state);
     state = isNaN(state) ? -1 : state;
     element.classList.remove(getCurrentStatus(element));
     if(device=="electrolyser"){
@@ -60,8 +58,11 @@ function setStatusValue(element,device,state){
     }
 }
 function setProdValue(ele,value){
-    console.log(value);
-    ele.innerHTML = (value == 0 ? "--" : value);
+    const progress = value - parseFloat(ele.value);
+    ele.parentNode.title = (progress<0 ? "+" : "") + progress.toFixed(2)
+    ele.innerHTML = (value == 0 ? "--" : value.toFixed(2));
+    ele.parentNode.style.color = progress < 0 ? "red" : "green";
+    ele.value = value;
 }
 document.addEventListener("DOMContentLoaded", function() {
     // start/stop action
@@ -143,7 +144,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 try {
                     const response = await fetch("/"+deviceURL+"prodValue");
                     const json = await response.json();
-                    const value = json.value < 1e-5 ? 0  : json.value;
+                    const value = parseFloat(json.value) < 1e-5 ? 0  : parseFloat(json.value);
                     setProdValue(prod_value,value);
                 } catch (error) {
                     console.error(error.message);
