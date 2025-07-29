@@ -59,7 +59,7 @@ function setStatusValue(element,device,state){
 }
 function setProdValue(ele,value){
     const progress = value - parseFloat(ele.value);
-    ele.parentNode.title = (progress<0 ? "+" : "") + progress.toFixed(2)
+    ele.parentNode.title = (progress>0 ? "+" : "") + progress.toFixed(2)
     ele.innerHTML = (value == 0 ? "--" : value.toFixed(2));
     ele.parentNode.style.color = progress < 0 ? "red" : "green";
     ele.value = value;
