@@ -5,7 +5,7 @@
     "type": "BOOL"
   },
   {
-    "name": "Restart_h2f",
+    "name": "Restart",
     "id": "DB1.DBX20.0",
     "type": "BOOL"
   },
@@ -15,18 +15,8 @@
     "type": "BOOL"
   },
   {
-    "name": "Restart_compressor",
-    "id": "DB1.DBX21.0",
-    "type": "BOOL"
-  },
-  {
     "name": "Start/Stop_electro",
     "id": "DB1.DBX12.0",
-    "type": "BOOL"
-  },
-  {
-    "name": "Restart_electro",
-    "id": "DB1.DBX22.0",
     "type": "BOOL"
   },
   {

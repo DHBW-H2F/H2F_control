@@ -33,8 +33,6 @@ use std::sync::Arc;
 
 
 
-// TODO: Add Reboot button
-
 #[derive(Parser, Debug)]
 #[command(version, about, long_about = None)]
 struct Args {
@@ -176,25 +174,6 @@ async fn restart_project(state: &State<AppState>) -> Result<(), Custom<String>> 
         Err(err) => Err(Custom(Status::InternalServerError, format!("{err:?}"))),
     }
 }
-#[get("/restart")]
-async fn restart_electrolyzer(state: &State<AppState>) -> Result<(), Custom<String>> {
-    send_command_write(&state.logo.clone(),"Restart_electro", &Value::Boolean(true)).await;
-    let res = send_command_write(&state.logo.clone(),"Restart_electro", &Value::Boolean(false)).await;
-    match res {
-        Ok(_) => Ok(()),
-        Err(err) => Err(Custom(Status::InternalServerError, format!("{err:?}"))),
-    }
-
-}
-#[get("/restart")]
-async fn restart_compressor(state: &State<AppState>) -> Result<(), Custom<String>> {
-    send_command_write(&state.logo.clone(),"Restart_compressor", &Value::Boolean(true)).await;
-    let res=send_command_write(&state.logo.clone(),"Restart_compressor", &Value::Boolean(false)).await;
-    match res {
-        Ok(_) => Ok(()),
-        Err(err) => Err(Custom(Status::InternalServerError, format!("{err:?}"))),
-    }
-}
 #[get("/state")]
 async fn get_state_compressor(state: &State<AppState>) -> status::Accepted<String> {
     let res = send_command_read(&state.logo.clone(), "Status_compr").await;
@@ -300,13 +279,11 @@ fn rocket() -> _ {
 
         .mount("/compressor", routes![start_compressor])
         .mount("/compressor", routes![stop_compressor])
-        .mount("/compressor", routes![restart_compressor])
         .mount("/compressor", routes![get_state_compressor])
         .mount("/compressor", routes![get_prod_value_compressor])
 
         .mount("/electrolyser", routes![start_electrolyzer])
         .mount("/electrolyser", routes![stop_electrolyzer])
-        .mount("/electrolyser", routes![restart_electrolyzer])
         .mount("/electrolyser", routes![prod_rate])
         .mount("/electrolyser", routes![get_state_electrolyser])
         .mount("/electrolyser", routes![get_prod_value_electrolyser])
