@@ -11,32 +11,32 @@
   },
   {
     "name": "Start/Stop_compressor",
-    "id": "DB1.DBX11.0",
-    "type": "BOOL"
-  },
-  {
-    "name": "Start/Stop_electro",
     "id": "DB1.DBX12.0",
     "type": "BOOL"
   },
   {
+    "name": "Start/Stop_electro",
+    "id": "DB1.DBX14.0",
+    "type": "BOOL"
+  },
+  {
     "name": "Status_compr",
-    "id": "DB1.DBW41",
+    "id": "DB1.DBW40",
     "type": "INT16"
   },
   {
     "name": "Status_electro",
-    "id": "DB1.DBW42",
+    "id": "DB1.DBW45",
     "type": "INT16"
   },
   {
     "name": "ProdValue_compr",
-    "id": "DB1.DBD51",
+    "id": "DB1.DBD50",
     "type": "FLOAT"
   },
   {
     "name": "ProdValue_electro",
-    "id": "DB1.DBD52",
+    "id": "DB1.DBD55",
     "type": "FLOAT"
   },
   {

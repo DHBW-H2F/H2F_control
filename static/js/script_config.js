@@ -78,6 +78,7 @@ document.addEventListener("DOMContentLoaded", function() {
         button.addEventListener('click', async function() {
             let device = button.id.split("_")[1];
             if(device!==undefined) device+="/";
+            console.log("/"+device+"start");
             const response = await fetch("/"+device+"start");
         });
     });
@@ -85,6 +86,7 @@ document.addEventListener("DOMContentLoaded", function() {
         button.addEventListener('click', async function() {
             let device = button.id.split("_")[1];
             if(device!==undefined) device+="/";
+            console.log("/"+device+"stop");
             const response = await fetch("/"+device+"stop");
         });
     });
