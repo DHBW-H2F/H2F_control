@@ -100,7 +100,7 @@ fn convert(valeur : Value) -> String{
     }
 }
 
-#[get("/start")]
+#[get("/")]
 async fn start_project(state: &State<AppState>) -> Result<(), Custom<String>> {
     let res = send_command_write(&state.logo.clone(), "Start/Stop", &Value::Boolean(true)).await;
     match res {
@@ -129,7 +129,7 @@ async fn start_compressor(state: &State<AppState>) -> Result<(), Custom<String>>
 
 
 
-#[get("/stop")]
+#[get("/")]
 async fn stop_project(state: &State<AppState>) -> Result<(), Custom<String>> {
     let res = send_command_write(&state.logo.clone(), "Start/Stop", &Value::Boolean(false)).await;
     match res {
@@ -165,7 +165,7 @@ async fn prod_rate(rate: f32, state: &State<AppState>) -> Result<(), Custom<Stri
 }
 
 
-#[get("/restart")]
+#[get("/")]
 async fn restart_project(state: &State<AppState>) -> Result<(), Custom<String>> {
     send_command_write(&state.logo.clone(),"Restart", &Value::Boolean(true)).await;
     let res = send_command_write(&state.logo.clone(),"Restart", &Value::Boolean(false)).await;
