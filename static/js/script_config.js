@@ -77,7 +77,7 @@ document.addEventListener("DOMContentLoaded", function() {
     startButtons.forEach((button)=>{
         button.addEventListener('click', async function() {
             let device = button.id.split("_")[1];
-            if(device!==undefined) device+="/";
+            device = device!==undefined ? device+="/" : device="";
             console.log("/"+device+"start");
             const response = await fetch("/"+device+"start");
         });
@@ -85,7 +85,7 @@ document.addEventListener("DOMContentLoaded", function() {
     stopButtons.forEach((button)=>{
         button.addEventListener('click', async function() {
             let device = button.id.split("_")[1];
-            if(device!==undefined) device+="/";
+            device = device!==undefined ? device+="/" : device="";
             console.log("/"+device+"stop");
             const response = await fetch("/"+device+"stop");
         });
