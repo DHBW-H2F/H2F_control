@@ -180,8 +180,8 @@ async fn restart_project(state: &State<AppState>) -> Result<(), Custom<String>> 
 }
 #[get("/restart")]
 async fn restart_compressor(state: &State<AppState>) -> Result<(), Custom<String>> {
-    let res1 = send_command_write(&state.logo.clone(),"Restart", &Value::Boolean(true)).await;
-    let res2 = send_command_write(&state.logo.clone(),"Restart", &Value::Boolean(false)).await;
+    let res1 = send_command_write(&state.logo.clone(),"Restart_compressor", &Value::Boolean(true)).await;
+    let res2 = send_command_write(&state.logo.clone(),"Restart_compressor", &Value::Boolean(false)).await;
     match res1 {
         Ok(_) => {
             return match res2 {
@@ -194,8 +194,8 @@ async fn restart_compressor(state: &State<AppState>) -> Result<(), Custom<String
 }
 #[get("/restart")]
 async fn restart_electrolyser(state: &State<AppState>) -> Result<(), Custom<String>> {
-    let res1 = send_command_write(&state.logo.clone(),"Restart", &Value::Boolean(true)).await;
-    let res2 = send_command_write(&state.logo.clone(),"Restart", &Value::Boolean(false)).await;
+    let res1 = send_command_write(&state.logo.clone(),"Restart_electro", &Value::Boolean(true)).await;
+    let res2 = send_command_write(&state.logo.clone(),"Restart_electro", &Value::Boolean(false)).await;
     match res1 {
         Ok(_) => {
             return match res2 {
