@@ -87,10 +87,6 @@ struct AppState {
     logo: Arc<Mutex<S7Device>>,
     //compressor: Arc<Mutex<S7Device>>,
 }
-#[derive(Serialize)]
-struct CompressorState {
-    state: String,
-}
 
 fn convert(valeur : Value) -> String{
     match valeur {
@@ -100,11 +96,19 @@ fn convert(valeur : Value) -> String{
     }
 }
 
-#[get("/")]
+
+#[get("/start")]
 async fn start_project(state: &State<AppState>) -> Result<(), Custom<String>> {
-    let res = send_command_write(&state.logo.clone(), "Start/Stop", &Value::Boolean(true)).await;
-    match res {
-        Ok(_) => Ok(()),
+    let res1 = start_electrolyzer(state).await;
+
+    match res1 {
+        Ok(_) => {
+            let res2 = start_compressor(state).await;
+            return match res2 {
+                Ok(_) => Ok(()),
+                Err(err) => Err(Custom(Status::InternalServerError, format!("{err:?}"))),
+            }
+        },
         Err(err) => Err(Custom(Status::InternalServerError, format!("{err:?}"))),
     }
 }
@@ -127,13 +131,17 @@ async fn start_compressor(state: &State<AppState>) -> Result<(), Custom<String>>
 }
 
 
-
-
-#[get("/")]
+#[get("/stop")]
 async fn stop_project(state: &State<AppState>) -> Result<(), Custom<String>> {
-    let res = send_command_write(&state.logo.clone(), "Start/Stop", &Value::Boolean(false)).await;
-    match res {
-        Ok(_) => Ok(()),
+    let res1 = stop_compressor(state).await;
+    match res1 {
+        Ok(_) => {
+            let res2 = stop_electrolyzer(state).await;
+            return match res2 {
+                Ok(_) => Ok(()),
+                Err(err) => Err(Custom(Status::InternalServerError, format!("{err:?}"))),
+            }
+        },
         Err(err) => Err(Custom(Status::InternalServerError, format!("{err:?}"))),
     }
 }
@@ -155,6 +163,51 @@ async fn stop_compressor(state: &State<AppState>) -> Result<(), Custom<String>> 
     }
 }
 
+
+#[get("/restart")]
+async fn restart_project(state: &State<AppState>) -> Result<(), Custom<String>> {
+    let res1 = restart_electrolyser(state).await;
+    match res1 {
+        Ok(_) => {
+            let res2 = restart_compressor(state).await;
+            return match res2 {
+                Ok(_) => Ok(()),
+                Err(err) => Err(Custom(Status::InternalServerError, format!("{err:?}"))),
+            }
+        },
+        Err(err) => Err(Custom(Status::InternalServerError, format!("{err:?}"))),
+    }
+}
+#[get("/restart")]
+async fn restart_compressor(state: &State<AppState>) -> Result<(), Custom<String>> {
+    let res1 = send_command_write(&state.logo.clone(),"Restart", &Value::Boolean(true)).await;
+    let res2 = send_command_write(&state.logo.clone(),"Restart", &Value::Boolean(false)).await;
+    match res1 {
+        Ok(_) => {
+            return match res2 {
+                Ok(_) => Ok(()),
+                Err(err) => Err(Custom(Status::InternalServerError, format!("{err:?}"))),
+            }
+        },
+        Err(err) => Err(Custom(Status::InternalServerError, format!("{err:?}"))),
+    }
+}
+#[get("/restart")]
+async fn restart_electrolyser(state: &State<AppState>) -> Result<(), Custom<String>> {
+    let res1 = send_command_write(&state.logo.clone(),"Restart", &Value::Boolean(true)).await;
+    let res2 = send_command_write(&state.logo.clone(),"Restart", &Value::Boolean(false)).await;
+    match res1 {
+        Ok(_) => {
+            return match res2 {
+                Ok(_) => Ok(()),
+                Err(err) => Err(Custom(Status::InternalServerError, format!("{err:?}"))),
+            }
+        },
+        Err(err) => Err(Custom(Status::InternalServerError, format!("{err:?}"))),
+    }
+}
+
+
 #[put("/prodRate?<rate>")]
 async fn prod_rate(rate: f32, state: &State<AppState>) -> Result<(), Custom<String>> {
     let res = send_command_write(&  state.logo.clone(),"Production_rate", &Value::Float32(rate)).await;
@@ -165,15 +218,6 @@ async fn prod_rate(rate: f32, state: &State<AppState>) -> Result<(), Custom<Stri
 }
 
 
-#[get("/")]
-async fn restart_project(state: &State<AppState>) -> Result<(), Custom<String>> {
-    send_command_write(&state.logo.clone(),"Restart", &Value::Boolean(true)).await;
-    let res = send_command_write(&state.logo.clone(),"Restart", &Value::Boolean(false)).await;
-    match res {
-        Ok(_) => Ok(()),
-        Err(err) => Err(Custom(Status::InternalServerError, format!("{err:?}"))),
-    }
-}
 #[get("/state")]
 async fn get_state_compressor(state: &State<AppState>) -> status::Accepted<String> {
     let res = send_command_read(&state.logo.clone(), "Status_compr").await;
@@ -194,6 +238,8 @@ async fn get_state_electrolyser(state: &State<AppState>) -> status::Accepted<Str
     println!("valeur : {}",result);
     return status::Accepted(format!("{{\"state\": \"{}\"}}", result));
 }
+
+
 #[get("/prodValue")]
 async fn get_prod_value_electrolyser(state: &State<AppState>) -> status::Accepted<String> {
     let res = send_command_read(&state.logo.clone(),"ProdValue_electro").await;
@@ -225,13 +271,6 @@ fn index() -> Redirect {
 //--------------------------------------------------------------
 
 
-
-
-
-
-
-
-
 #[launch]
 fn rocket() -> _ {
     let args = Args::parse();
@@ -242,48 +281,51 @@ fn rocket() -> _ {
         .unwrap();
 
     let app: AppConfig = config.try_deserialize().unwrap();
-    //let regs_logo = get_regs_file(app.logo_registers);
-    //let logo_device = create_s7_device(app.logo_ip, regs_logo);
-    let regs_file: File = match File::open(&app.logo_registers) {
-        Ok(file) => file,
-        Err(err) => panic!(
-            "Could not open registers definition file : {err} ({0})",
-            app.logo_registers
-        ),
-    };
-    println!("{:?}", regs_file);
-    let logo_device = S7Device::new(
-        match app.logo_ip.parse() {
-            Ok(val) => val,
-            Err(err) => panic!(
-                "Could not parse controller adress : {err:?} ({0})",
-                app.logo_ip
-            ),
-        },
-        match s7_device::utils::get_defs_from_json(regs_file) {
-            Ok(regs) => regs,
-            Err(err) => {
-                panic!("There was an error reading registers definition from file : ({0})",err)
-            }
-        },
-    );
+    let regs_logo = get_regs_file(app.logo_registers);
+    let logo_device = create_s7_device(app.logo_ip, regs_logo);
+    //let regs_file: File = match File::open(&app.logo_registers) {
+    //    Ok(file) => file,
+    //    Err(err) => panic!(
+    //        "Could not open registers definition file : {err} ({0})",
+    //        app.logo_registers
+    //    ),
+    //};
+    //println!("{:?}", regs_file);
+    //let logo_device = S7Device::new(
+    //    match app.logo_ip.parse() {
+    //        Ok(val) => val,
+    //        Err(err) => panic!(
+    //            "Could not parse controller adress : {err:?} ({0})",
+    //            app.logo_ip
+    //        ),
+    //    },
+    //    match s7_device::utils::get_defs_from_json(regs_file) {
+    //        Ok(regs) => regs,
+    //        Err(err) => {
+    //            panic!("There was an error reading registers definition from file : ({0})",err)
+    //        }
+    //    },
+    //);
 
     //let regs_compressor: File = get_regs_file(app.compressor_registers);
     //let compressor_device = create_s7_device(app.compressor_ip,regs_compressor);
     rocket::build()
         .mount("/", routes![index])
         .mount("/", FileServer::from("./static"))
-        .mount("/start", routes![start_project])
-        .mount("/stop", routes![stop_project])
-        .mount("/restart", routes![restart_project])
+        .mount("/", routes![start_project])
+        .mount("/", routes![stop_project])
+        .mount("/", routes![restart_project])
 
         .mount("/compressor", routes![start_compressor])
         .mount("/compressor", routes![stop_compressor])
+        .mount("/compressor", routes![restart_compressor])
         .mount("/compressor", routes![get_state_compressor])
         .mount("/compressor", routes![get_prod_value_compressor])
+        
 
         .mount("/electrolyser", routes![start_electrolyzer])
         .mount("/electrolyser", routes![stop_electrolyzer])
+        .mount("/electrolyser", routes![restart_electrolyser])
         .mount("/electrolyser", routes![prod_rate])
         .mount("/electrolyser", routes![get_state_electrolyser])
         .mount("/electrolyser", routes![get_prod_value_electrolyser])

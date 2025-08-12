@@ -92,7 +92,10 @@ document.addEventListener("DOMContentLoaded", function() {
     });
     restartButtons.forEach((button)=>{
         button.addEventListener('click', async function() {
-            const response = await fetch("/"+"restart");
+            let device = button.id.split("_")[1];
+            device = device!==undefined ? device+="/" : device="";
+            console.log("/"+device+"stop");
+            const response = await fetch("/"+device+"restart");
         });
     });
     // Production rate
