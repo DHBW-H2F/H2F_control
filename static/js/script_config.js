@@ -61,7 +61,7 @@ function setStatusValue(element,device,state){
     const stateList = stageManager[device];
     const stateValue = stateList[state];
     element.classList.add(stateValue===undefined ? stateList["other"].class : stateValue.class);
-    element.innerHTML.add(stateValue===undefined ? stateList["other"].value : stateValue.value);
+    element.innerHTML= (stateValue===undefined ? stateList["other"].value : stateValue.value);
 }
 
 function setProdValue(ele,value){
