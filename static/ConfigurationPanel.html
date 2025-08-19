@@ -45,40 +45,46 @@
             <a href="ConfigurationPanel.html" class="btn btn-primary d-none" id="configPanelButton">Configuration Panel</a>
         </div>
     </div>
+    <!-- Main container for switch of the devices options -->
     <div class="container-fluid" id="switch-screen">
         <button class="btn btn-primary disabled" id="btn_h2" value="H2_Production">H2 Production</button>
         <button class="btn btn-primary" id="btn_elec" value="Electrolyser">Electrolyser</button>
         <button class="btn btn-primary" id="btn_compressor" value="Compressor">Compressor</button>
     </div>
-    <!-- Main container for configuration options -->
+
+
+    <!-- Main container for configuration options  -->
     <div class="container mt-5" id="main-container">
+        <!-- container for whole system -->
         <div class="row mb-4 sys_screen" id="H2_Production">
             <!-- Left Column for Start, Stop, and Restart controls -->
-            <div class="col-md-6">
+            <div class="col-md-6 text-center">
                 <h2>Start and Stop the system</h2>
                 <!-- Buttons to start, stop, and restart the system, using a grid to space them evenly -->
                 <div class="d-grid gap-2">
                     <button type="button" class="btn btn-success w-100 startButton" id="start">Start</button>
                     <button type="button" class="btn btn-danger w-100 stopButton" id="stop">Stop</button>
-                    <button type="button" class="btn btn-warning w-100 restartButton" id="restart">Restart</button>
+                    <button type="button" class="btn btn-warning w-100 restartButton" id="restart">Clean Errors</button>
                 </div>
             </div>
 
             <!-- Right Column for selecting a production value -->
             <div class="col-md-6">
-                <h2>Select a Production Value</h2>
+                <h3>Select a Production Value</h3>
                 <!-- Slider input to select a value, with a label showing the current value -->
                 <div class="form-group">
                     <label for="slider">Choose a value:</label>
-                    <input type="range" class="form-range" id="slider" min="60" max="100" step="0.1" value="60">
+                    <input type="range" class="form-range slider_elec" min="60" max="100" step="0.1" value="60">
                     <!-- The current value of the slider is displayed here -->
-                    <span id="sliderValue" class="slider-value">60.0</span>
+                    <span class="slider-value"></span>
                 </div>
 
                 <!-- Embedded Grafana iframe displaying real-time data -->
                 <iframe src="http://grafana.h2f/d-solo/live_data00000/live-data?orgId=1&theme=light&panelId=1&refresh=1s"></iframe>
             </div>
         </div>
+
+        <!-- container for the Electrolyser -->
         <div class="row mb-4 sys_screen d-none" id="Electrolyser">
             <!-- Left Column for Start, Stop, and Restart controls -->
             <div class="col-md-6 text-center">
@@ -87,7 +93,15 @@
                 <div class="d-grid gap-2">
                     <button type="button" class="btn btn-success w-100 startButton" id="start_electrolyser">Start</button>
                     <button type="button" class="btn btn-danger w-100 stopButton" id="stop_electrolyser">Stop</button>
-                    <button type="button" class="btn btn-warning w-100 restartButton" id="restart_electrolyser">Restart</button>
+                    <button type="button" class="btn btn-warning w-100 restartButton" id="restart_electrolyser">Clean Errors</button>
+                </div>
+                <h3 style="margin-top:5%;">Select a Production Value</h3>
+                <!-- Slider input to select a value, with a label showing the current value -->
+                <div class="form-group">
+                    <label for="slider">Choose a value:</label>
+                    <input type="range" class="form-range slider_elec" min="60" max="100" step="0.1" value="60">
+                    <!-- The current value of the slider is displayed here -->
+                    <span class="slider-value">60.0</span>
                 </div>
             </div>
 
@@ -105,6 +119,8 @@
                 <iframe src="http://grafana.h2f/d-solo/live_data00000/live-data?orgId=1&theme=light&panelId=1&refresh=1s"></iframe>
             </div>
         </div>
+
+        <!-- container for the Compressor -->
         <div class="row mb-4 sys_screen d-none" id="Compressor">
             <!-- Left Column for Start, Stop, and Restart controls -->
             <div class="col-md-6 text-center">
@@ -113,7 +129,7 @@
                 <div class="d-grid gap-2">
                     <button type="button" class="btn btn-success w-100 startButton" id="start_compressor">Start</button>
                     <button type="button" class="btn btn-danger w-100 stopButton" id="stop_compressor">Stop</button>
-                    <button type="button" class="btn btn-warning w-100 restartButton" id="restart_compressor">Restart</button>
+                    <button type="button" class="btn btn-warning w-100 restartButton" id="restart_compressor">Clean Errors</button>
                 </div>
             </div>
 

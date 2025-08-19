@@ -1,62 +1,69 @@
+const stageManager = {
+    electrolyser :{
+        0 : {
+            class:"sts_idle",
+            value:"Internal Error, System not Initialized yet"
+        },
+        1 : {
+            class:"sts_running",
+            value:"System in Operation",
+        },
+        2 : {
+            class:"sts_err",
+            value:"Error",
+        },
+        3 : {
+            class:"sts_fatal_err",
+            value:"Fatal Error",
+        },
+        4 : {
+            class:"sts_err",
+            value:"System in Expert Mode",
+        },
+        other : {
+            class:"sts_cant_connect",
+            value:"offline"
+        }
+    },
+    compressor : {
+        0:{
+            class:"sts_fatal_err",
+            value:"Stopped"
+        },
+        1:{
+            class:"sts_idle",
+            value:"Pre-heating"
+        },
+        2:{
+            class:"sts_running",
+            value:"Start Up"
+        },
+        3:{
+            class:"sts_running",
+            value:"In Operation"
+        },
+        other:{
+            class:"sts_fatal_err",
+            value:"offline"
+        }
+    }
+    
+}
+
 function getCurrentStatus(element){
     let listClass = Array.from(element.classList)
     return element.classList[listClass.find((ele)=>ele.includes("sts_"))]
 }
+
 function setStatusValue(element,device,state){
     state = isNaN(state) ? -1 : state;
     element.classList.remove(getCurrentStatus(element));
-    if(device=="electrolyser"){
-        switch (state){
-            case 0 : 
-                element.classList.add("sts_idle");
-                element.innerHTML = "Internal Error, System not Initialized yet";
-                break;
-            case 1 : 
-                element.classList.add("sts_running");
-                element.innerHTML = "System in Operation";
-                break;
-            case 2 : 
-                element.classList.add("sts_err");
-                element.innerHTML = "Error";
-                break;
-            case 3 : 
-                element.classList.add("sts_fatal_err");
-                element.innerHTML = "Fatal Error";
-                break;
-            case 4 : 
-                element.classList.add("sts_err");
-                element.innerHTML = "System in Expert Mode";
-                break;
-            default :
-                element.classList.add("sts_cant_connect");
-                element.innerHTML = "offline";
-                break;
-        }
-    }else if (device == "compressor"){
-        switch (state){
-            case 0 :
-                element.classList.add("sts_fatal_err");
-                element.innerHTML = "Stopped";
-                break;
-            case 1 :
-                element.classList.add("sts_idle");
-                element.innerHTML = "Pre-heating";
-                break;
-            case 2 :
-                element.classList.add("sts_running");
-                element.innerHTML = "Start Up";
-                break;
-            case 3 :
-                element.classList.add("sts_running");
-                element.innerHTML = "In Operation";
-                break;
-            default :
-                element.classList.add("sts_cant_connect");
-                element.innerHTML = "offline";
-                break;
-        }
-    }
+    const stateList = stageManager[device];
+    const stateValue = stateList[state];
+    element.classList.add(stateValue===undefined ? stateList["other"].class : stateValue.class);
+    element.innerHTML.add(stateValue===undefined ? stateList["other"].value : stateValue.value);
 }
+
 function setProdValue(ele,value){
     const progress = value - parseFloat(ele.value);
     ele.parentNode.title = (progress>0 ? "+" : "") + progress.toFixed(2)
@@ -64,8 +71,23 @@ function setProdValue(ele,value){
     ele.parentNode.style.color = progress < 0 ? "red" : "green";
     ele.value = value;
 }
+
+// Fonction pour mettre à jour la valeur des slider
+function updateValueSlider(value) {
+    document.querySelectorAll('.slider-value').forEach(sliderValue =>{
+        sliderValue.textContent = value;
+    });
+}
+
+function syncSlider(listSlider,value){
+    listSlider.forEach(slider => {
+        slider.value = value;
+    });
+}
+
+
 document.addEventListener("DOMContentLoaded", function() {
-    // start/stop action
+    
     const startButtons = document.querySelectorAll('.startButton');
     const stopButtons = document.querySelectorAll('.stopButton');
     const restartButtons = document.querySelectorAll('.restartButton');
@@ -73,6 +95,16 @@ document.addEventListener("DOMContentLoaded", function() {
     const prod_valuesEle= document.querySelectorAll(".sys_prod_value span");
     const switchbuttons = document.getElementById("switch-screen").querySelectorAll("button");
     const screens=document.getElementById("main-container").querySelectorAll(".sys_screen");
+    const prodRateSlider = document.querySelectorAll('.slider_elec');
+
+    switchbuttons.forEach(btn=>{
+        btn.addEventListener("click",(evt)=>{
+            switchbuttons.forEach((b)=>b.classList.remove("disabled"));
+            screens.forEach((screen)=>{screen.classList.add("d-none")});
+            evt.target.classList.add("disabled");
+            document.getElementById(evt.target.value).classList.remove("d-none")
+        })
+    });
 
     startButtons.forEach((button)=>{
         button.addEventListener('click', async function() {
@@ -98,37 +130,27 @@ document.addEventListener("DOMContentLoaded", function() {
             const response = await fetch("/"+device+"restart");
         });
     });
-    // Production rate
-    const prodRate = document.getElementById('slider');
 
-    prodRate.addEventListener("change", async function () {
-        const request = await fetch("/electrolyser/prodRate?" + new URLSearchParams({
-            rate: prodRate.value,
-        }),{
-            method: "PUT",
+
+    prodRateSlider.forEach(prodRate => {
+        prodRate.addEventListener("change", async function () {
+            const request = await fetch("/electrolyser/prodRate?" + 
+                new URLSearchParams({
+                    rate: prodRate.value,
+                }),
+                {
+                    method: "PUT",
+                });
         });
-    });
-    switchbuttons.forEach(btn=>{
-        btn.addEventListener("click",(evt)=>{
-            switchbuttons.forEach((b)=>b.classList.remove("disabled"));
-            screens.forEach((screen)=>{screen.classList.add("d-none")});
-            evt.target.classList.add("disabled");
-            document.getElementById(evt.target.value).classList.remove("d-none")
-        })
+        prodRate.addEventListener('input', function() {
+            updateValueSlider(prodRate.value);
+            syncSlider(prodRateSlider,prodRate.value)
+        });
+
+        updateValueSlider(prodRate.value);
     });
 
-    // Fonction pour mettre à jour la valeur du slider
-    function updateValue(value) {
-        document.getElementById('sliderValue').textContent = value;
-    }
-
-    // Événement de mise à jour du slider
-    var slider = document.getElementById('slider');
-    slider.addEventListener('input', function() {
-        updateValue(this.value);
-    }); 
-    
-    async function updateProdValue(){
+    async function updateValue(){
             statusEle.forEach(async (stat)=>{
                 let device = stat.id.split("_")[1];
                 const deviceURL = device!==undefined ? device+"/" : device;
@@ -161,10 +183,12 @@ document.addEventListener("DOMContentLoaded", function() {
         while(true){
             const delay = ()=>{return new Promise(resolve => setTimeout(resolve, 5000))}
             await delay().then(()=>{
-                updateProdValue();
+                updateValue();
             });
         }
     }
-    updateStateAndValue();
+    updateValue();
+    //updateStateAndValue();
+    
 
 });

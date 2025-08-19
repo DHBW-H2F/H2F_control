@@ -106,7 +106,10 @@ async fn start_project(state: &State<AppState>) -> Result<(), Custom<String>> {
             let res2 = start_compressor(state).await;
             return match res2 {
                 Ok(_) => Ok(()),
-                Err(err) => Err(Custom(Status::InternalServerError, format!("{err:?}"))),
+                Err(err) => {
+                    stop_electrolyzer(state).await;
+                    return Err(Custom(Status::InternalServerError, format!("{err:?}")))
+                },
             }
         },
         Err(err) => Err(Custom(Status::InternalServerError, format!("{err:?}"))),
@@ -147,7 +150,7 @@ async fn stop_project(state: &State<AppState>) -> Result<(), Custom<String>> {
 }
 #[get("/stop")]
 async fn stop_electrolyzer(state: &State<AppState>) -> Result<(), Custom<String>> {
-    let res = send_command_write(&state.logo.clone(), "Start/Stop_electro", &Value::Boolean(false)).await;
+    let res = send_command_write(&state.logo.clone(), "Start_Stop_electro", &Value::Boolean(false)).await;
     match res {
         Ok(_) => Ok(()),
         Err(err) => Err(Custom(Status::InternalServerError, format!("{err:?}"))),
@@ -156,7 +159,7 @@ async fn stop_electrolyzer(state: &State<AppState>) -> Result<(), Custom<String>
 }
 #[get("/stop")]
 async fn stop_compressor(state: &State<AppState>) -> Result<(), Custom<String>> {
-    let res = send_command_write(&state.logo.clone(), "Start/Stop_compressor", &Value::Boolean(false)).await;
+    let res = send_command_write(&state.logo.clone(), "Start_Stop_compressor", &Value::Boolean(false)).await;
     match res {
         Ok(_) => Ok(()),
         Err(err) => Err(Custom(Status::InternalServerError, format!("{err:?}"))),
