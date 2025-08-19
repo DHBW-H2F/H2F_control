@@ -188,7 +188,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
     updateValue();
-    //updateStateAndValue();
+    updateStateAndValue();
     
 
 });

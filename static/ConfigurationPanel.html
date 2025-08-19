@@ -74,7 +74,7 @@
                 <!-- Slider input to select a value, with a label showing the current value -->
                 <div class="form-group">
                     <label for="slider">Choose a value:</label>
-                    <input type="range" class="form-range slider_elec" min="60" max="100" step="0.1" value="60">
+                    <input type="range" class="form-range slider_elec" id="slider" min="60" max="100" step="0.1" value="60">
                     <!-- The current value of the slider is displayed here -->
                     <span class="slider-value"></span>
                 </div>
@@ -98,8 +98,8 @@
                 <h3 style="margin-top:5%;">Select a Production Value</h3>
                 <!-- Slider input to select a value, with a label showing the current value -->
                 <div class="form-group">
-                    <label for="slider">Choose a value:</label>
-                    <input type="range" class="form-range slider_elec" min="60" max="100" step="0.1" value="60">
+                    <label for="slider2">Choose a value:</label>
+                    <input type="range" class="form-range slider_elec" id="slider2" min="60" max="100" step="0.1" value="60">
                     <!-- The current value of the slider is displayed here -->
                     <span class="slider-value">60.0</span>
                 </div>
@@ -108,11 +108,11 @@
             <!-- Right Column for selecting a production value -->
             <div class="col-md-6">
                 <div class="row my-5">
-                    <div class="col-5 h4 text-center">Status of the Electrolyser</div>
+                    <div class="col-6 h4 text-center">Status of the Electrolyser</div>
                     <div class="col-2 status_view sts_idle sys_status" id="status_electrolyser">Idle</div>
                 </div>
                 <div class="row my-5">  
-                    <div class="col-5 h4 text-center">Value</div>
+                    <div class="col-6 h4 text-center">Value</div>
                     <div class="col-2 status_view sys_prod_value"><span id="prod_electrolyser" value="0">--</span>&nbspbars</div>
                 </div>
                 <!-- Embedded Grafana iframe displaying real-time data -->
