@@ -3,7 +3,7 @@
  * @param {String} title the Title of the toast
  * @returns 
  */
-export function createInfoToast(title) {
+window.createInfoToast = function(title) {
     const createdAt = Date.now(); 
     const toast = document.createElement("div");
     toast.className = "toast";
@@ -79,7 +79,7 @@ export function createInfoToast(title) {
  * @param {HTMLDivElement} toast 
  * @param {String} text 
  */
-export function modifyInfoToast(toast, text){
+window.modifyInfoToast= function(toast, text){
     const body = toast.querySelector(".toast-body") 
     const spinner = body.querySelector("div");
     if (spinner==undefined) body.removeChild(spinner);

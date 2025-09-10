@@ -1,4 +1,3 @@
-import { createInfoToast, modifyInfoToast } from "./toast.js";
 /* The `stageManager` object is used to store status information for different devices in the system.
 It is structured as follows: 
 {"deviceName" : {
