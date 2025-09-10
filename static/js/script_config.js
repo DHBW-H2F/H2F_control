@@ -174,7 +174,7 @@ function syncSlider(listSlider,value){
 document.addEventListener("DOMContentLoaded", function() {
     const startButtons = document.querySelectorAll('.startButton');
     const stopButtons = document.querySelectorAll('.stopButton');
-    const restartButtons = document.querySelectorAll('.restartButton');
+    const cleanButtons = document.querySelectorAll('.cleanButton');
     const statusEle = document.querySelectorAll(".sys_status");
     const prod_valuesEle= document.querySelectorAll(".sys_prod_value span");
     const switchbuttons = document.getElementById("switch-screen").querySelectorAll("button");
@@ -195,8 +195,8 @@ document.addEventListener("DOMContentLoaded", function() {
     stopButtons.forEach((button)=>{
         button.addEventListener('click', ()=>{sendcommandFonction(button,"stop")});
     });
-    restartButtons.forEach((button)=>{
-        button.addEventListener('click', ()=>{sendcommandFonction(button,"restart")});
+    cleanButtons.forEach((button)=>{
+        button.addEventListener('click', ()=>{sendcommandFonction(button,"clean_error")});
     });
 
     prodRateSlider.forEach(prodRate => {
