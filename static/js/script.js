@@ -1,3 +1,62 @@
+/**
+    * The function `updateIframeSrcWithDates` updates an iframe's source URL with specified date
+    * parameters and adds a cache-busting parameter to ensure a fresh request.
+    * 
+    * @param src - The `src` parameter is the URL of the iframe whose source you want to update with
+    * the specified date parameters and a cache-busting parameter.
+    * 
+    * @param fromTimestamp - The `fromTimestamp` parameter represents the starting date/time for a
+    * range. It is used to specify the beginning of a time interval or period.
+    * 
+    * @param toTimestamp - The `toTimestamp` parameter represents the end date or timestamp that you
+    * want to set for the iframe's source URL. This parameter is used to specify the upper limit of a
+    * time range or period.
+    * 
+    * @returns the updated URL with the 'from' and 'to' date parameters set based on the provided
+    * timestamps, along with a cache-busting parameter to ensure a fresh request.
+*/
+function updateIframeSrcWithDates(src, fromTimestamp, toTimestamp) {
+    var url = new URL(src); // Parse the iFrame's src URL
+    url.searchParams.set('from', fromTimestamp); // Set 'from' date parameter
+    url.searchParams.set('to', toTimestamp); // Set 'to' date parameter
+    // Add a cache-busting parameter to ensure the request is fresh
+    url.searchParams.set('cache_buster', new Date().getTime());
+    return url.toString(); // Return the updated URL
+}
+/**
+    * The function `convertToTimestamp` converts a date string to a timestamp.
+    * 
+    * @param dateStr - A string representing a date and time in a specific format, such as
+    * "2022-01-01T12:00:00".
+    * 
+    * @returns The function `convertToTimestamp` takes a date string as input, converts it to a Date
+    * object, and then returns the timestamp of that date in milliseconds.
+*/
+function convertToTimestamp(dateStr) {
+    return new Date(dateStr).getTime();
+}
+
+/**
+ * The function `updateGraphsWithDate` retrieves start and end dates from input fields, converts
+ * them to timestamps, and updates the sources of all iframes on the page with the new date range.
+ */
+function updateGraphsWithDate() {
+    var fromDate = document.getElementById('datePickerFrom').value; // Get start date value
+    var toDate = document.getElementById('datePickerTo').value; // Get end date value
+    // Proceed if both dates are selected
+    if (fromDate && toDate) {
+        var fromTimestamp = convertToTimestamp(fromDate + 'T00:00:00'); // Convert start date to timestamp (start of the day)
+        var toTimestamp = convertToTimestamp(toDate + 'T23:59:59'); // Convert end date to timestamp (end of the day)
+        // Select all iFrames in the document
+        var iframes = document.querySelectorAll("iframe");
+        iframes.forEach(function(iframe) {
+            var src = iframe.getAttribute('src'); // Get the current iFrame's src
+            var newSrc = updateIframeSrcWithDates(src, fromTimestamp, toTimestamp); // Update src with the new date range
+            iframe.setAttribute('src', newSrc); // Set the new src to the iFrame
+        });
+    }
+}
+
 document.addEventListener("DOMContentLoaded", function() {
     // Initialize Flatpickr for the date pickers (From and To dates)
     flatpickr("#datePickerFrom", {
@@ -19,42 +78,6 @@ document.addEventListener("DOMContentLoaded", function() {
             updateGraphsWithDate(); // Call function to update the graphs with the new dates
         }
     });
-
-    // Function to update the graphs (iFrames) based on the selected date range
-    function updateGraphsWithDate() {
-        var fromDate = document.getElementById('datePickerFrom').value; // Get start date value
-        var toDate = document.getElementById('datePickerTo').value; // Get end date value
-
-        // Proceed if both dates are selected
-        if (fromDate && toDate) {
-            var fromTimestamp = convertToTimestamp(fromDate + 'T00:00:00'); // Convert start date to timestamp (start of the day)
-            var toTimestamp = convertToTimestamp(toDate + 'T23:59:59'); // Convert end date to timestamp (end of the day)
-
-            // Select all iFrames in the document
-            var iframes = document.querySelectorAll("iframe");
-            iframes.forEach(function(iframe) {
-                var src = iframe.getAttribute('src'); // Get the current iFrame's src
-                var newSrc = updateIframeSrcWithDates(src, fromTimestamp, toTimestamp); // Update src with the new date range
-                iframe.setAttribute('src', newSrc); // Set the new src to the iFrame
-            });
-        }
-    }
-
-    // Converts a date string into a UNIX timestamp (in milliseconds)
-    function convertToTimestamp(dateStr) {
-        return new Date(dateStr).getTime();
-    }
-
-    // Updates the 'from' and 'to' parameters in the iFrame src URL
-    function updateIframeSrcWithDates(src, fromTimestamp, toTimestamp) {
-        var url = new URL(src); // Parse the iFrame's src URL
-        url.searchParams.set('from', fromTimestamp); // Set 'from' date parameter
-        url.searchParams.set('to', toTimestamp); // Set 'to' date parameter
-        // Add a cache-busting parameter to ensure the request is fresh
-        url.searchParams.set('cache_buster', new Date().getTime());
-        return url.toString(); // Return the updated URL
-    }
-
     // Get the full path of the current URL
     var currentPath = window.location.pathname;
     console.log("Full URL path: ", currentPath); // Log the full URL path
