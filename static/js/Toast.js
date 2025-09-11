@@ -95,6 +95,6 @@ window.modifyInfoToast= function(toast, text){
  * @param {String} the color text name
  */
 window.changeToastSquareColor= function(toast, color){
-    const square = toast.getElementById("toastSquare");
+    const square = toast.querySelector("#toastSquare");
     square.style.backgroundColor = color;
 }

@@ -109,7 +109,7 @@ function setProdValue(element,value){
  */
 async function fetchBackEnd(url, parameterURL, parameterFetch={method:"get"}){
     const param = (parameterURL==undefined ? "" : ("?"+ new URLSearchParams(parameterURL)));
-    parameterFetch.signal = AbortSignal.timeout(7000);
+    parameterFetch.signal = AbortSignal.timeout(4000);
     return fetch(url+param,parameterFetch).then(response => {
         if (!response.ok) {
             // create error object and reject if not a 2xx response code
