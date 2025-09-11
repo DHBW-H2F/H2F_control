@@ -6,6 +6,7 @@ The project is based on the CSS library `bootstrap` and Rust library `rocket`.
 
 
 ### Project contents
+- **Logo**: the Logo system of the project
 - **src**: Rust back-end files
 - **static**: Front-end files
 - *config.yalm*: File containing the configuration and Rust dependencies
