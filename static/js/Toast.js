@@ -17,12 +17,13 @@ window.createInfoToast = function(title) {
     const square = document.createElement("div");
     square.style.width = "20px";
     square.style.height = "20px";
+    square.style.marginRight = "5px"
     square.style.backgroundColor = "blue";
     square.className = "rounded mr-2";
 
     const strong = document.createElement("strong");
     strong.className = "mr-auto";
-    strong.textContent = title; 
+    strong.textContent = title.replace("/","");
 
     const small = document.createElement("small");
     small.style.marginLeft = "5px";
