@@ -6,6 +6,7 @@
 window.createInfoToast = function(title) {
     const createdAt = Date.now(); 
     const toast = document.createElement("div");
+    $(toast).toast({"delay": 8000})
     toast.className = "toast";
     toast.setAttribute("role", "alert");
     toast.setAttribute("aria-live", "assertive");
@@ -15,6 +16,7 @@ window.createInfoToast = function(title) {
     header.className = "toast-header";
 
     const square = document.createElement("div");
+    square.id = "toastSquare";
     square.style.width = "20px";
     square.style.height = "20px";
     square.style.marginRight = "5px"
@@ -68,7 +70,7 @@ window.createInfoToast = function(title) {
     body.appendChild(spinner);  
     toast.appendChild(header);
     toast.appendChild(body);
-    $(toast).toast({"delay": 6000})
+
     $(toast).on("hidden.bs.toast",()=>{
       toast.remove();
     })
@@ -85,4 +87,14 @@ window.modifyInfoToast= function(toast, text){
     const spinner = body.querySelector("div");
     if (spinner==undefined) body.removeChild(spinner);
     body.textContent = text;
+}
+
+/**
+ * modify the color of the square of the toast
+ * @param {HTMLDivElement} toast
+ * @param {String} the color text name
+ */
+window.changeToastSquareColor= function(toast, color){
+    const square = toast.getElementById("toastSquare");
+    square.style.backgroundColor = color;
 }

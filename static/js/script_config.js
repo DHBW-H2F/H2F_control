@@ -134,7 +134,9 @@ async function sendcommandFonction(button,command){
         $(toast).toast('show');
         const response = await fetchBackEnd("/"+device+command);
         modifyInfoToast(toast,"Command send successful");
+        changeToastSquareColor(toast,"green");
     } catch (error) {
+        changeToastSquareColor(toast,"red");
         modifyInfoToast(toast,"An error as occurs :\n"+error.message.toString());
     }
 }
@@ -213,8 +215,10 @@ document.addEventListener("DOMContentLoaded", function() {
                         method: "put",
                     }
                 );
+                changeToastSquareColor(toast,"green");
                 modifyInfoToast(toast,"Command send successful");
             } catch (error) {
+                changeToastSquareColor(toast,"red");
                 modifyInfoToast(toast,"An error as occurs : "+error.message.toString());
             }
         });
