@@ -141,7 +141,7 @@ async fn start_project(state: &State<AppState>) -> Result<(), Custom<String>> {
 /// http protocol : `get`
 #[get("/start")]
 async fn start_electrolyzer(state: &State<AppState>) -> Result<(), Custom<String>> {
-    let res = send_command_write(&state.logo.clone(), "Start_Stop_compressor", &Value::Boolean(true)).await;
+    let res = send_command_write(&state.logo.clone(), "Start_Stop_electro", &Value::Boolean(true)).await;
     match res {
         Ok(_) => Ok(()),
         Err(err) => Err(Custom(Status::InternalServerError, format!("{err:?}"))),
@@ -153,7 +153,7 @@ async fn start_electrolyzer(state: &State<AppState>) -> Result<(), Custom<String
 /// http protocol : `get`
 #[get("/start")]
 async fn start_compressor(state: &State<AppState>) -> Result<(), Custom<String>> {
-    let res = send_command_write(&state.logo.clone(), "Start_Stop_compressorw", &Value::Boolean(true)).await;
+    let res = send_command_write(&state.logo.clone(), "Start_Stop_compressor", &Value::Boolean(true)).await;
     match res {
         Ok(_) => Ok(()),
         Err(err) => Err(Custom(Status::InternalServerError, format!("{err:?}"))),
