@@ -10,12 +10,12 @@
     "type": "BOOL"
   },
   {
-    "name": "Start/Stop_compressor",
+    "name": "Start_Stop_compressor",
     "id": "DB1.DBX10.0",
     "type": "BOOL"
   },
   {
-    "name": "Start/Stop_electro",
+    "name": "Start_Stop_electro",
     "id": "DB1.DBX15.0",
     "type": "BOOL"
   },
